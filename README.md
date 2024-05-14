@@ -1,2 +1,2 @@
 # -finance_pjt
-taeho and hunjin의 pjt
+태호와 현진의 pjt
