@@ -1,5 +1,3 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -15,7 +13,8 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap'
 
 import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
