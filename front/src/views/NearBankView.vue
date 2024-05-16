@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <h1>근처은행</h1>
     <KaKaoMap />
   </div>

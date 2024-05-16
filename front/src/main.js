@@ -10,6 +10,9 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 const app = createApp(App)
 
+//환경변수 용 설정
+  
+
 app.use(createPinia())
 app.use(router)
 

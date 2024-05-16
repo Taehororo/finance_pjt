@@ -1,14 +1,15 @@
 <template>
-  <div class="map_wrap">
-    <div id="map" style="width:1000px;height:1000px;position:relative;overflow:hidden;"></div>
-    <div id="menu_wrap" class="bg_white">
-      <div class="option">
+
+    <div class="map_wrap">
+      <div id="map" style="width:100%;height:700px;position:relative;overflow:hidden;"></div>
+      <div id="menu_wrap" class="bg_white">
+        <div class="option">
+        </div>
+        
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
       </div>
-      
-      <ul id="placesList"></ul>
-      <div id="pagination"></div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -108,7 +109,7 @@ export default {
       const el = document.createElement('li');
       let itemStr = `<span class="markerbg marker_${index + 1}"></span>
                      <div class="info">
-                       <h5>${number}. ${place.place_name}</h5>`;
+                       <h>${number}. ${place.place_name}</h>`;
       if (place.road_address_name) {
         itemStr += `<span>도로명)${place.road_address_name}</span>
                     <p class="jibun gray">지번)${place.address_name}</p>`;
