@@ -129,9 +129,11 @@ const sendPeriod = function () {
         content: selectedText.value
       }
     }).then((response) => {
-      // Handle response
+      // 이제 post로 정렬기준을 보냈으니 그 기준대로 정렬된 데이터를 django에서 받은후
+      // 이 데이터를 토대로 finances의 데이터를 재구성
+      store.changeFinances(response.data)
     }).catch((error) => {
-      // Handle error
+      console.log(error)
     })
 }
 
