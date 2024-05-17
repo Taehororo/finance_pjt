@@ -1,10 +1,5 @@
 <template>
-  <!-- <div>
-    <img src="@/assets/images/bank.png" class="img-fluid" alt="...">
-  </div> -->
-  <!-- <div class="bg-info-subtle">
-    <img src="@/assets/images/money_bitcoin_whale.png" class="img-fluid" alt="Sample Image">
-  </div> -->
+
 
 
       <div class="row h-200 bg-info-subtle">

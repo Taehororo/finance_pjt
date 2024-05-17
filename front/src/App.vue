@@ -43,15 +43,16 @@ const goLogin = function () {
     </div>
   </nav>
 </div>
-  <!-- <RouterLink :to="{name: 'MainPageView'}">THB</RouterLink> |
-  <RouterLink :to="{name: 'ExchangeView'}">환율비교</RouterLink>|
-  <RouterLink :to="{name: 'CompareView'}">예/적금 금리비교</RouterLink> |
-  <RouterLink :to="{name:'NearBankView'}">근처은행</RouterLink>|
-  <RouterLink :to="{name: 'SuggestionView'}">상품 추천</RouterLink> -->
   <RouterView />
 
 </template>
 
-<style scoped>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Jua&display=swap');
+body, html {
+  font-family: "IBM Plex Sans KR", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
 </style>
