@@ -9,6 +9,7 @@ from .models import DepositProductsBaseInfo, DepositProductsOption
 from .serializers import DepositProductsBaseInfoSerializer, DepositProductsOptionSerializer
 from django.http import HttpResponse 
 import pprint
+import re
 
 
 # Django와 외부 API를 통해 데이터를 가져와서 데이터베이스에 저장하는 뷰
@@ -62,45 +63,53 @@ def get_deposit_products(request):
 
 @api_view(['GET','POST'])
 def product_list(request):
-    # 모든 예금 상품 목록을 반환
+    # 모든 예금 상품 목록을 12개월 기준 최고우대금리 내림차순 정렬로 반환
     if request.method == 'GET':
-        # 데이터베이스에서 모든 예금 상품을 가져옴
-        products = get_list_or_404(DepositProductsBaseInfo)
-        # 가져온 예금 상품들을 시리얼라이즈
-        serializer = DepositProductsBaseInfoSerializer(products, many=True)
-        # 시리얼라이즈된 데이터를 응답으로 반환
-        print(serializer.data)
-        return Response(serializer.data)
+        # 첫 화면 정렬 기준은 12개월
+        save_term = '12'
     
-    # 특정 저축기간 상품 목록 내림차순 정렬로 반환
+    # 상품 목록을 특정 저축기간 최고우대금리 내림차순 정렬로 반환
     elif request.method =='POST':
-        # 받은 저축기간
+        # vue로 부터 전달받은 저축기간 (ex: 6개월)
         save_term = request.data.get('content', '')
+        # 저축기간 숫자 리스트형태로 추출 (ex: ['6'])
+        save_term = re.findall(r'\d+', save_term)
+        # 저축기간 숫자 추출 (ex: 6)
+        save_term = save_term[0] if save_term else '0'
 
-        import re
-        # 추출된 숫자 
-        save_term_numeric = re.findall(r'\d+', save_term)
+    # 데이터베이스에서 모든 예금 상품을 가져옴
+    products = get_list_or_404(DepositProductsBaseInfo)
+        
 
-        # 사용된 저축기간 숫자
-        save_term_numeric = save_term_numeric[0] if save_term_numeric else '0'
+    product_with_highest_rates = []
+    for product in products:
+        try:
+            # 선택된 저축기간에 따른 option 조회
+            option = product.options.get(save_trm=save_term)
+            product_with_highest_rates.append({
+            'product': product,
+            'highest_option_rate': option.intr_rate2,
+            'has_rate': True
+            })
+        except DepositProductsOption.DoesNotExist:
+            # 선택된 저축기간 option이 없는 상품인 경우
+            product_with_highest_rates.append({
+            'product': product,
+            'highest_option_rate': float('-inf'),  # 정렬을 위한 처리
+            'has_rate': False
+            })
+    
+    # 저축기간 기준 최고금리 내림차순 정렬
+    sorted_products = sorted(product_with_highest_rates, key=lambda x: (x['has_rate'], x['highest_option_rate']), reverse=True)
+    # pprint.pprint(sorted_products)
 
-        # 모든 예금 상품을 가져옴
-        products = get_list_or_404(DepositProductsBaseInfo)
+    # sorted products 정렬된 목록 
+    sorted_products_only = [x['product'] for x in sorted_products]
+    # pprint.pprint(sorted_products_only)
 
-        # 각 상품별로 옵션 중 save_trm이 지정된 기간인 것을 찾고, 그 중 intr_rate2가 가장 높은 값을 기준으로 정렬
-        product_options = []
-        for product in products:
-            options = product.options.filter(save_trm=save_term_numeric).order_by('-intr_rate2')
-            if options.exists():
-                max_option = options.first()
-                product_options.append((product, max_option.intr_rate2))
-            else:
-                product_options.append((product, 0))  # 만약 해당 기간의 옵션이 없으면 0으로 설정
+    # Serialize and return the sorted products
+    serializer = DepositProductsBaseInfoSerializer(sorted_products_only, many=True)
+    # pprint.pprint(serializer.data)
 
-        # intr_rate2 기준으로 내림차순 정렬
-        product_options.sort(key=lambda x: x[1], reverse=True)
-
-        # 정렬된 상품들로부터 시리얼라이즈 데이터 생성
-        serialized_data = [DepositProductsBaseInfoSerializer(product[0]).data for product in product_options]
-
-        return Response(serialized_data)
+    return Response(serializer.data)
+    
