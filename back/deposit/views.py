@@ -58,11 +58,20 @@ def get_deposit_products(request):
 
 
 # 모든 예금 상품 목록을 반환하는 뷰
-@api_view(['GET'])
+@api_view(['GET','POST'])
 def product_list(request):
-    # 데이터베이스에서 모든 예금 상품을 가져옴
-    products = get_list_or_404(DepositProductsBaseInfo)
-    # 가져온 예금 상품들을 시리얼라이즈
-    serializer = DepositProductsBaseInfoSerializer(products, many=True)
-    # 시리얼라이즈된 데이터를 응답으로 반환
-    return Response(serializer.data)
+    if request.method == 'GET':
+        # 데이터베이스에서 모든 예금 상품을 가져옴
+        products = get_list_or_404(DepositProductsBaseInfo)
+        # 가져온 예금 상품들을 시리얼라이즈
+        serializer = DepositProductsBaseInfoSerializer(products, many=True)
+        # 시리얼라이즈된 데이터를 응답으로 반환
+        return Response(serializer.data)
+    elif request.method =='POST':
+        print(request.data['content'])
+        if request.data['content'] == '12개월':
+            print('test')
+        products = get_list_or_404(DepositProductsBaseInfo)
+        # 가져온 예금 상품들을 시리얼라이즈
+        serializer = DepositProductsBaseInfoSerializer(products, many=True)
+        return Response(serializer.data)

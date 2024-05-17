@@ -272,6 +272,7 @@
 <script setup>
 import { useFinanceStore } from '@/stores/finance'
 import { ref } from 'vue'
+import axios from 'axios'
 const store = useFinanceStore()
 store.getDeposits()
 
@@ -280,7 +281,7 @@ const sendPeriod = function () {
     axios({
       method: 'post',
       // 여기다가 너가 만든 view함수 url
-      url: `${API_URL}/`,
+      url: `${store.API_URL}/deposit/products/`,
       data: {
         content: selectedText.value
       }
