@@ -5,7 +5,9 @@
 </template>
 
 <script setup>
-
+import { useFinanceStore } from '@/stores/finance'
+const store = useFinanceStore()
+store.getDeposits()
 </script>
 
 <style scoped>
