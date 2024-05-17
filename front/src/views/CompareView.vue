@@ -69,43 +69,14 @@
           <div>
             <nav class="navbar navbar-expand-lg">
               <div>
-                <a class="navbar-brand fs-3" href="#">정기예금</a>
                 <RouterLink :to="{ name: 'deposit' }" class="navbar-brand fs-3">정기예금</RouterLink>
                 <span class="fs-3">|</span>
                 <RouterLink :to="{ name: 'savings' }" class="navbar-brand fs-3 ps-3">정기적금</RouterLink>
-                <a class="navbar-brand fs-3 ps-3" href="#">정기적금</a>
               </div>
             </nav>
           </div>
-          <!-- <RouterView /> -->
-          <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>금융회사명</th>
-                  <th>상품명</th>
-                  <th :class="{ highlightedHeader: selectedText === '1개월' }">1개월</th>
-                  <th :class="{ highlightedHeader: selectedText === '3개월' }">3개월</th>
-                  <th :class="{ highlightedHeader: selectedText === '6개월' }">6개월</th>
-                  <th :class="{ highlightedHeader: selectedText === '12개월' }">12개월</th>
-                  <th :class="{ highlightedHeader: selectedText === '24개월' }">24개월</th>
-                  <th :class="{ highlightedHeader: selectedText === '36개월' }">36개월</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="finance in store.finances" :key="finance.base_product_id">
-                  <td>{{ finance.kor_co_nm }}</td>
-                  <td>{{ finance.fin_prdt_nm }}</td>
-                  <td :class="{ highlightedCell: selectedText === '1개월' }">{{ getInterestRate(finance.options, '1') }}</td>
-                  <td :class="{ highlightedCell: selectedText === '3개월' }">{{ getInterestRate(finance.options, '3') }}</td>
-                  <td :class="{ highlightedCell: selectedText === '6개월' }">{{ getInterestRate(finance.options, '6') }}</td>
-                  <td :class="{ highlightedCell: selectedText === '12개월' }">{{ getInterestRate(finance.options, '12') }}</td>
-                  <td :class="{ highlightedCell: selectedText === '24개월' }">{{ getInterestRate(finance.options, '24') }}</td>
-                  <td :class="{ highlightedCell: selectedText === '36개월' }">{{ getInterestRate(finance.options, '36') }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <RouterView :selectedText="selectedText"/>
+          
         </main>
       </div>
     </div>
