@@ -9,8 +9,9 @@ from .models import DepositProductsBaseInfo, DepositProductsOption
 from .serializers import DepositProductsBaseInfoSerializer, DepositProductsOptionSerializer
 from django.http import HttpResponse 
 
-# Create your views here.
+# Django와 외부 API를 통해 데이터를 가져와서 데이터베이스에 저장하는 뷰
 def get_deposit_products(request):
+    # API 키와 URL을 설정
     API_KEY = settings.API_KEY
     URL = f'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json'
     params = {
@@ -56,8 +57,12 @@ def get_deposit_products(request):
     return HttpResponse('Data saved to database') 
 
 
+# 모든 예금 상품 목록을 반환하는 뷰
 @api_view(['GET'])
 def product_list(request):
+    # 데이터베이스에서 모든 예금 상품을 가져옴
     products = get_list_or_404(DepositProductsBaseInfo)
+    # 가져온 예금 상품들을 시리얼라이즈
     serializer = DepositProductsBaseInfoSerializer(products, many=True)
+    # 시리얼라이즈된 데이터를 응답으로 반환
     return Response(serializer.data)

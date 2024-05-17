@@ -19,5 +19,6 @@ export const useFinanceStore = defineStore('finance', () => {
     })
   }
 
+
   return { API_URL, getDeposits }
 })
