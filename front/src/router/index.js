@@ -20,6 +20,8 @@ const router = createRouter({
       path: '/compare',
       name: 'CompareView',
       component: CompareView,
+      // rediect를 넣어준 이유는 처음 화면에 들어갔을때 routerview에 기본적으로 화면을 띄워주기 위해
+      redirect: '/compare/deposit',
       children: [
         { path: 'deposit', name: 'deposit', component: CompareViewDeposit },
         { path: 'savings', name: 'savings', component: CompareViewSavings }

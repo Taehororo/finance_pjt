@@ -86,13 +86,17 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { useFinanceStore } from '@/stores/finance'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
-
+import CompareViewDeposit from './CompareViewDeposit.vue'
 const store = useFinanceStore()
 store.getDeposits()
 
+
+
+
 const selectedText = ref('12개월')
+
 
 const sendPeriod = function () {
   axios({

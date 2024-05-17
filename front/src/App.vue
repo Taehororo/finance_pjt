@@ -24,7 +24,6 @@ const goLogin = function () {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <RouterLink :to="{ name: 'CompareView' }" class="nav-link active">예/적금 금리비교</RouterLink>
-
           </li>
           <li class="nav-item">
             <RouterLink :to="{ name: 'ExchangeView' }" class="nav-link active">환율비교</RouterLink>
