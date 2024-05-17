@@ -14,6 +14,7 @@ export const useFinanceStore = defineStore('finance', () => {
       method: 'get',
       url: `${API_URL}/deposit/products/`
     }).then(response => {
+      console.log(response.data)
       finances.value = response.data
     }).catch(error => {
       console.log(error)
@@ -22,6 +23,7 @@ export const useFinanceStore = defineStore('finance', () => {
 
   // django에서 정렬된 기준으로 새로 온 데이터를 finances에 저장
   const changeFinances = function (data) {
+    console.log(data)
     finances.value = data
   }
 
