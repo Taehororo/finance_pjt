@@ -135,9 +135,11 @@ const sendPeriod = function () {
     method: 'post',
     url: `${store.API_URL}/deposit/products/`,
     data: {
-      // 여기에 selectedText2.value만 추가하면 될듯
-      content: selectedText.value
-    }
+      // 예치기간
+      content: selectedText.value,
+      // 은행이름
+      content: selectedText2.value
+    },
   }).then((response) => {
     store.changeFinances(response.data)
   }).catch((error) => {
@@ -147,7 +149,7 @@ const sendPeriod = function () {
   axios({
     method: 'post',
     // 수정필요
-    url: `${store.API_URL}/saving/products/`,
+    url: `${store.API_URL}/saving/fixed/products/`,
     data: {
       content: selectedText.value
     }
@@ -160,7 +162,7 @@ const sendPeriod = function () {
   axios({
     method: 'post',
     // 수정필요
-    url: `${store.API_URL}/saving/products/`,
+    url: `${store.API_URL}/saving/free/products/`,
     data: {
       content: selectedText.value
     }

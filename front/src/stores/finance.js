@@ -31,9 +31,10 @@ export const useFinanceStore = defineStore('finance', () => {
     axios({
       method: 'get',
       // 수정필요
-      url: `${API_URL}/saving/products/`
+      url: `${API_URL}/saving/free/products/`
     }).then(response => {
       finances2.value = response.data
+      console.log(response.data)
     }).catch(error => {
       console.log(error)
     })
@@ -44,7 +45,7 @@ export const useFinanceStore = defineStore('finance', () => {
     axios({
       method: 'get',
       // 수정필요
-      url: `${API_URL}/saving/products/`
+      url: `${API_URL}/saving/fixed/products/`
     }).then(response => {
       finances3.value = response.data
     }).catch(error => {
@@ -68,5 +69,5 @@ export const useFinanceStore = defineStore('finance', () => {
   }  
 
 
-  return { API_URL, getDeposits, getFreeSaving,getFixedSaving, finances, changeFinances, changeFinances2, changeFinances3 }
+  return { API_URL, getDeposits, getFreeSaving,getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3 }
 })
