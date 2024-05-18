@@ -15,7 +15,7 @@
           </tr>
         </thead>
           <tbody>
-            <tr v-for="finance in store.finances" :key="finance.base_product_id">
+            <tr v-for="finance in store.finances2" :key="finance.base_product_id">
               <td>{{ finance.kor_co_nm }}</td>
               <td>{{ finance.fin_prdt_nm }}</td>
               <td :class="{ highlightedCell: selectedText === '1개월' }">{{ getInterestRate(finance.options, '1') }}</td>

@@ -16,7 +16,37 @@
                   <p class="text-info text-opacity-50 fs-6 ps-1">정렬기준</p>
                   <hr class="border border-info border-3 opacity-50">
                 </div>
-                
+                  <!-- 예치기간 선택을 위한 버튼 -->
+                  <div class="dropdown">
+                  <p class="m-0 text-primary text-opacity-25">은행</p>
+                  <button
+                    class="btn btn-primary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {{ selectedText2 }}
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li>
+                      <a class="dropdown-item" href="#" @click="setDropdownText2('전체은행')">전체은행</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#" @click="setDropdownText2('국민은행')">국민은행</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#" @click="setDropdownText2('신한은행')">신한은행</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#" @click="setDropdownText2('하나은행')">하나은행</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#" @click="setDropdownText2('우리은행')">우리은행</a>
+                    </li>
+                  </ul>
+                </div>
+                <!-- 예치기간 선택을 위한 버튼 -->
                 <div class="dropdown">
                   <p class="m-0 text-primary text-opacity-25">예치기간</p>
                   <button
@@ -64,7 +94,9 @@
               <div>
                 <RouterLink :to="{ name: 'deposit' }" class="navbar-brand fs-3">정기예금</RouterLink>
                 <span class="fs-3">|</span>
-                <RouterLink :to="{ name: 'savings' }" class="navbar-brand fs-3 ps-3">정기적금</RouterLink>
+                <RouterLink :to="{ name: 'saving' }" class="navbar-brand fs-3 ps-3">정기적금</RouterLink>
+                <span class="fs-3">|</span>
+                <RouterLink :to="{ name: 'freesaving' }" class="navbar-brand fs-3 ps-3">자유적금</RouterLink>
               </div>
             </nav>
           </div>
@@ -84,18 +116,26 @@ import axios from 'axios'
 import CompareViewDeposit from './CompareViewDeposit.vue'
 const store = useFinanceStore()
 store.getDeposits()
+store.getFixedSaving()
+store.getFreeSaving()
 
 
 
 
+// 예치기간을 위한 변수
 const selectedText = ref('12개월')
+
+// 은행을 위한 변수
+const selectedText2 = ref('전체은행')
 
 
 const sendPeriod = function () {
+  // 정기 예금을 위한 axios
   axios({
     method: 'post',
     url: `${store.API_URL}/deposit/products/`,
     data: {
+      // 여기에 selectedText2.value만 추가하면 될듯
       content: selectedText.value
     }
   }).then((response) => {
@@ -103,17 +143,45 @@ const sendPeriod = function () {
   }).catch((error) => {
     console.log(error)
   })
+  // 정기 적금을 위한 axios
+  axios({
+    method: 'post',
+    // 수정필요
+    url: `${store.API_URL}/saving/products/`,
+    data: {
+      content: selectedText.value
+    }
+  }).then((response) => {
+    store.changeFinances2(response.data)
+  }).catch((error) => {
+    console.log(error)
+  })
+  // 자유적금을 위한 axios
+  axios({
+    method: 'post',
+    // 수정필요
+    url: `${store.API_URL}/saving/products/`,
+    data: {
+      content: selectedText.value
+    }
+  }).then((response) => {
+    store.changeFinances3(response.data)
+  }).catch((error) => {
+    console.log(error)
+  })
 }
-
+// 예치기간 변경을 위한 함수
 const setDropdownText = function (text) {
   selectedText.value = text
   sendPeriod()
 }
-
-const getInterestRate = function (options, period) {
-  const option = options.find(opt => opt.save_trm === period)
-  return option ? option.intr_rate2 : '-'
+// 은행 변경을 위한 함수
+const setDropdownText2 = function (text) {
+  selectedText2.value = text
+  sendPeriod()
 }
+
+
 </script>
 
 <style scoped>
