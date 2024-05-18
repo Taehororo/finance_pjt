@@ -20,6 +20,7 @@ class DepositProductsBaseInfo(models.Model):
 
     class Meta:
         db_table = 'DepositProductsBaseInfo'
+        verbose_name = "예금 상품 기본 정보"
 
     
 class DepositProductsOption(models.Model):
@@ -34,4 +35,5 @@ class DepositProductsOption(models.Model):
 
     class Meta:
         db_table = 'DepositProductsOption'
+        verbose_name = "예금 상품 옵션"
         unique_together = ('fin_co_no', 'fin_prdt_cd', 'intr_rate_type', 'save_trm')
