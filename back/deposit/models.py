@@ -1,5 +1,5 @@
 from django.db import models
-from django.conf import settings
+
 
 class DepositProductsBaseInfo(models.Model):
     base_product_id = models.BigAutoField(primary_key=True, verbose_name="기본 상품 ID")
@@ -34,4 +34,4 @@ class DepositProductsOption(models.Model):
 
     class Meta:
         db_table = 'DepositProductsOption'
-        unique_together = ('fin_co_no', 'fin_prdt_cd', 'intr_rate_type', 'intr_rate_type_nm', 'save_trm')
+        unique_together = ('fin_co_no', 'fin_prdt_cd', 'intr_rate_type', 'save_trm')
