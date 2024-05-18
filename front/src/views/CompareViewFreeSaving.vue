@@ -1,5 +1,4 @@
 <template>
-    <h1>자유적금</h1>
     <div class="table-responsive">
         <table class="table">
           <thead>

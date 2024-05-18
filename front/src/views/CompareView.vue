@@ -138,7 +138,7 @@ const sendPeriod = function () {
       // 예치기간
       content: selectedText.value,
       // 은행이름
-      content: selectedText2.value
+      bankname: selectedText2.value
     },
   }).then((response) => {
     store.changeFinances(response.data)
