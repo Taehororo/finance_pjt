@@ -15,7 +15,7 @@ import re
 # Django와 외부 API를 통해 데이터를 가져와서 데이터베이스에 저장하는 뷰
 def get_deposit_products(request):
     # API 키와 URL을 설정
-    API_KEY = settings.API_KEY
+    API_KEY = settings.DEPOSIT_SAVING_API_KEY
     URL = f'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json'
     params = {
         'auth': API_KEY,
@@ -75,6 +75,7 @@ def product_list(request):
         save_term = save_term[0] if save_term else '0'  # 저축기간 숫자 추출 (ex: 6)
         bank_name = request.data.get('bankname', '')    # vue로부터 전달받은 은행이름
 
+        print(save_term, bank_name)
     # 데이터베이스에서 예금 상품 필터링 (은행 필터링 포함)
     if bank_name != '전체은행':
         products = DepositProductsBaseInfo.objects.filter(kor_co_nm=bank_name)
