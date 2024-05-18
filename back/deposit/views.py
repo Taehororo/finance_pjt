@@ -29,7 +29,7 @@ def get_deposit_products(request):
 
     # 데이터베이스에 저장
     for base_data in baseList:
-        DepositProductsBaseInfo.objects.create(
+        DepositProductsBaseInfo.objects.update_or_create(
             fin_co_no=base_data['fin_co_no'],
             fin_prdt_cd=base_data['fin_prdt_cd'],
             kor_co_nm=base_data['kor_co_nm'],
@@ -47,7 +47,7 @@ def get_deposit_products(request):
         )
     for option_data in optionList:
             base_instance = DepositProductsBaseInfo.objects.get(fin_prdt_cd=option_data['fin_prdt_cd'])
-            DepositProductsOption.objects.create(
+            DepositProductsOption.objects.update_or_create(
                 base_product=base_instance,
                 fin_co_no=option_data['fin_co_no'],
                 fin_prdt_cd=option_data['fin_prdt_cd'],
