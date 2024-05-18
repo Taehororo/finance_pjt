@@ -146,7 +146,10 @@ const sendPeriod = function () {
     method: 'post',
     url: `${store.API_URL}/saving/fixed/products/`,
     data: {
-      content: selectedText.value
+       // 예치기간
+       content: selectedText.value,
+      // 은행이름
+      bankname: selectedText2.value
     }
   }).then((response) => {
     store.changeFinances2(response.data)
@@ -158,7 +161,10 @@ const sendPeriod = function () {
     method: 'post',
     url: `${store.API_URL}/saving/free/products/`,
     data: {
-      content: selectedText.value
+       // 예치기간
+       content: selectedText.value,
+      // 은행이름
+      bankname: selectedText2.value
     }
   }).then((response) => {
     store.changeFinances3(response.data)

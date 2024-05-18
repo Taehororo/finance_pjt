@@ -65,21 +65,23 @@ def get_deposit_products(request):
 def product_list(request):
     # 모든 예금 상품 목록을 12개월 기준 최고우대금리 내림차순 정렬로 반환
     if request.method == 'GET':
-        # 첫 화면 정렬 기준은 12개월
-        save_term = '12'
+        save_term = '12'    # 기본저축기간 12개월
+        bank_name = '전체은행'      # 전체은행
     
-    # 상품 목록을 특정 저축기간 최고우대금리 내림차순 정렬로 반환
+    # 특정은행 상품 목록을 특정저축기간 최고우대금리 내림차순 정렬로 반환
     elif request.method =='POST':
-        # vue로 부터 전달받은 저축기간 (ex: 6개월)
-        save_term = request.data.get('content', '')
-        # 저축기간 숫자 리스트형태로 추출 (ex: ['6'])
-        save_term = re.findall(r'\d+', save_term)
-        # 저축기간 숫자 추출 (ex: 6)
-        save_term = save_term[0] if save_term else '0'
+        save_term = request.data.get('content', '') # vue로부터 전달받은 저축기간 (ex: 6개월)
+        save_term = re.findall(r'\d+', save_term)   # 저축기간 숫자 리스트형태로 추출 (ex: ['6'])
+        save_term = save_term[0] if save_term else '0'  # 저축기간 숫자 추출 (ex: 6)
+        bank_name = request.data.get('bankname', '')    # vue로부터 전달받은 은행이름
 
-    # 데이터베이스에서 모든 예금 상품을 가져옴
-    products = get_list_or_404(DepositProductsBaseInfo)
-        
+    # 데이터베이스에서 예금 상품 필터링 (은행 필터링 포함)
+    if bank_name != '전체은행':
+        products = DepositProductsBaseInfo.objects.filter(kor_co_nm=bank_name)
+    elif bank_name == '전체은행':
+        # 데이터베이스에서 모든 예금 상품을 가져옴
+        products = DepositProductsBaseInfo.objects.all()
+        # products = get_list_or_404(DepositProductsBaseInfo)    
 
     product_with_highest_rates = []
     for product in products:
@@ -101,15 +103,12 @@ def product_list(request):
     
     # 저축기간 기준 최고금리 내림차순 정렬
     sorted_products = sorted(product_with_highest_rates, key=lambda x: (x['has_rate'], x['highest_option_rate']), reverse=True)
-    # pprint.pprint(sorted_products)
 
     # sorted products 정렬된 목록 
     sorted_products_only = [x['product'] for x in sorted_products]
-    # pprint.pprint(sorted_products_only)
 
     # Serialize and return the sorted products
     serializer = DepositProductsBaseInfoSerializer(sorted_products_only, many=True)
-    # pprint.pprint(serializer.data)
 
     return Response(serializer.data)
     
