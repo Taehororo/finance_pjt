@@ -1,12 +1,5 @@
 <template>
   <div>
-    <div class="container">
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
-        </div>
-      </nav>
-    </div>
 
     <div class="bg-info-subtle d-flex align-items-center justify-content-center" style="height: 100px;">
       <h2>예/적금 금리비교</h2>
