@@ -25,7 +25,19 @@ export const useFinanceStore = defineStore('finance', () => {
       console.log(error)
     })
   }
-
+    // django에서 정기적금 데이터 받기
+    const getFixedSaving = function () {
+      axios({
+        method: 'get',
+        // 수정필요
+        url: `${API_URL}/saving/fixed/products/`
+      }).then(response => {
+        finances2.value = response.data
+      }).catch(error => {
+        console.log(error)
+      })
+    }
+    
    // django에서 자유적금 데이터 받기
   const getFreeSaving = function () {
     axios({
@@ -33,25 +45,14 @@ export const useFinanceStore = defineStore('finance', () => {
       // 수정필요
       url: `${API_URL}/saving/free/products/`
     }).then(response => {
-      finances2.value = response.data
+      finances3.value = response.data
       console.log(response.data)
     }).catch(error => {
       console.log(error)
     })
   }
 
-  // django에서 정기적금 데이터 받기
-  const getFixedSaving = function () {
-    axios({
-      method: 'get',
-      // 수정필요
-      url: `${API_URL}/saving/fixed/products/`
-    }).then(response => {
-      finances3.value = response.data
-    }).catch(error => {
-      console.log(error)
-    })
-  }
+
 
   // django에서 정렬된 기준으로 새로 온 데이터를 finances에 저장
   const changeFinances = function (data) {

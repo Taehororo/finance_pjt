@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="bg-info-subtle d-flex align-items-center justify-content-center" style="height: 100px;">
       <h2>예/적금 금리비교</h2>
     </div>
@@ -16,8 +15,8 @@
                   <p class="text-info text-opacity-50 fs-6 ps-1">정렬기준</p>
                   <hr class="border border-info border-3 opacity-50">
                 </div>
-                  <!-- 예치기간 선택을 위한 버튼 -->
-                  <div class="dropdown">
+                <!-- 예치기간 선택을 위한 버튼 -->
+                <div class="dropdown">
                   <p class="m-0 text-primary text-opacity-25">은행</p>
                   <button
                     class="btn btn-primary dropdown-toggle"
@@ -52,13 +51,13 @@
                   <button
                     class="btn btn-primary dropdown-toggle"
                     type="button"
-                    id="dropdownMenuButton"
+                    id="dropdownMenuButton2"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
                     {{ selectedText }}
                   </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                     <li>
                       <a class="dropdown-item" href="#" @click="setDropdownText('1개월')">1개월</a>
                     </li>
@@ -100,6 +99,7 @@
               </div>
             </nav>
           </div>
+          <P> </P>
           <RouterView :selectedText="selectedText"/>
           
         </main>
@@ -111,23 +111,19 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { useFinanceStore } from '@/stores/finance'
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
-import CompareViewDeposit from './CompareViewDeposit.vue'
+
 const store = useFinanceStore()
 store.getDeposits()
 store.getFixedSaving()
 store.getFreeSaving()
-
-
-
 
 // 예치기간을 위한 변수
 const selectedText = ref('12개월')
 
 // 은행을 위한 변수
 const selectedText2 = ref('전체은행')
-
 
 const sendPeriod = function () {
   // 정기 예금을 위한 axios
@@ -148,7 +144,6 @@ const sendPeriod = function () {
   // 정기 적금을 위한 axios
   axios({
     method: 'post',
-    // 수정필요
     url: `${store.API_URL}/saving/fixed/products/`,
     data: {
       content: selectedText.value
@@ -161,7 +156,6 @@ const sendPeriod = function () {
   // 자유적금을 위한 axios
   axios({
     method: 'post',
-    // 수정필요
     url: `${store.API_URL}/saving/free/products/`,
     data: {
       content: selectedText.value
@@ -172,25 +166,22 @@ const sendPeriod = function () {
     console.log(error)
   })
 }
+
 // 예치기간 변경을 위한 함수
 const setDropdownText = function (text) {
   selectedText.value = text
   sendPeriod()
 }
+
 // 은행 변경을 위한 함수
 const setDropdownText2 = function (text) {
   selectedText2.value = text
   sendPeriod()
 }
-
-
 </script>
 
 <style scoped>
-.highlightedHeader {
-  background-color: rgba(0, 238, 255, 0.1);
-}
-.highlightedCell {
-  background-color: rgba(0, 238, 255, 0.1);
+.router-link-active {
+  font-weight: bold;
 }
 </style>
