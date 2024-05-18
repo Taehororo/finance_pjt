@@ -26,8 +26,9 @@ environ.Env.read_env(
     env_file=os.path.join(BASE_DIR, '.env')
 )
 
-# 환경변수를 읽어옴
-API_KEY = env('API_KEY')
+# 각 API 키를 개별적으로 불러옴
+DEPOSIT_SAVING_API_KEY = env('DEPOSIT_SAVING_API_KEY')
+EXCHANGE_API_KEY = env('EXCHANGE_API_KEY')
 
 
 # Quick-start development settings - unsuitable for production
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'accounts',
     'deposit',
     'saving',
+    'exchange',
     'rest_framework',
     'corsheaders',
     'django.contrib.admin',

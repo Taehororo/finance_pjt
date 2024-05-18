@@ -15,7 +15,7 @@ import re
 # Django와 외부 API를 통해 데이터를 가져와서 데이터베이스에 저장하는 뷰
 def get_saving_products(request):
     # API 키와 URL을 설정
-    API_KEY = settings.API_KEY
+    API_KEY = settings.DEPOSIT_SAVING_API_KEY
     URL = f'http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json'
     params = {
         'auth': API_KEY,
