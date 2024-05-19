@@ -31,14 +31,14 @@ export const useFinanceStore = defineStore('finance', () => {
     // const username = payload.username
     // const password1 = payload.password1
     // const password2 = payload.password2
-    const { name, home, username, password1, password2 } = payload
+    const { name, username, password1, password2, postcode, roadAddress, jibunAddress, detailAddress } = payload
 
     // 2. axios로 django에 요청을 보냄
     axios({
       method: 'post',
       url: `${API_URL}/accounts/signup/`,
       data: {
-        name, home, username, password1, password2
+        name, username, password1, password2, postcode, roadAddress, jibunAddress, detailAddress
       }
     })
      .then((response) => {
