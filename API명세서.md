@@ -16,11 +16,11 @@
  > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 적금 api 불러와서 DB에 저장 <br>
 > http://127.0.0.1:8000/saving/api
- 
- > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
-> 환율 api 불러와서 DB에 저장 <br>
-> http://127.0.0.1:8000/exchange/api
- 
+
+<br>
+<hr>
+<br>
+
  > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > (DB에 저장된) 전체 예금상품 목록조회 <br>
 > http://127.0.0.1:8000/deposit/products/
@@ -58,3 +58,21 @@
 > | --- | --- |
 > | **content** | 12개월 |
 > | **bankname** | 전체은행 |
+
+<br>
+<hr>
+<br>
+
+ > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
+> 환율계산 요청 불러오기 <br>
+> http://127.0.0.1:8000/exchange/api
+
+
+ > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
+> 환율계산 요청<br>
+> http://127.0.0.1:8000/exchange/calculate/ <br>
+> | **Body** &nbsp; <sub>form-data</sub>  |  |
+> | --- | --- |
+> | **inputcountry** | 미국 달러 |
+> | **outputcountry** | 한국 원 |
+> | **money** | 10 |
