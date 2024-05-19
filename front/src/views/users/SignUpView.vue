@@ -4,6 +4,17 @@
         <img src="@/assets/images/file.png" alt="Logo" class="logo mb-4">
         <span class="text-center mb-4 fs-2 fw-bold">THBank Signup</span>
         <form @submit.prevent="signUp">
+
+          <div class="form-group mb-3">
+            <label for="name" class="form-label">이름</label>
+            <input type="text" v-model.trim="name" id="name" class="form-control">
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="home" class="form-label">사는곳</label>
+            <input type="text" v-model.trim="home" id="home" class="form-control">
+          </div>
+
           <div class="form-group mb-3">
             <label for="username" class="form-label">아이디</label>
             <input type="text" v-model.trim="username" id="username" class="form-control">
@@ -26,6 +37,9 @@
   import { ref } from 'vue'
   import { useFinanceStore } from '@/stores/finance'
   
+
+  const name = ref(null)
+  const home = ref(null)
   const username = ref(null)
   const password1 = ref(null)
   const password2 = ref(null)
@@ -33,9 +47,12 @@
   
   const signUp = function () {
     const payload = {
+      name : name.value,
+      home : home.value,
       username: username.value,
       password1: password1.value,
       password2: password2.value
+
     }
     store.signUp(payload)
   }

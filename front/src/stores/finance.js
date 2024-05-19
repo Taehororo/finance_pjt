@@ -31,17 +31,14 @@ export const useFinanceStore = defineStore('finance', () => {
     // const username = payload.username
     // const password1 = payload.password1
     // const password2 = payload.password2
-    const { username, password1, password2 } = payload
+    const { name, home, username, password1, password2 } = payload
 
     // 2. axios로 django에 요청을 보냄
     axios({
       method: 'post',
       url: `${API_URL}/accounts/signup/`,
       data: {
-        // username: username,
-        // password1: password1,
-        // password2: password2
-        username, password1, password2
+        name, home, username, password1, password2
       }
     })
      .then((response) => {
@@ -113,7 +110,6 @@ export const useFinanceStore = defineStore('finance', () => {
       url: `${API_URL}/saving/free/products/`
     }).then(response => {
       finances3.value = response.data
-      console.log(response.data)
     }).catch(error => {
       console.log(error)
     })
@@ -137,5 +133,5 @@ export const useFinanceStore = defineStore('finance', () => {
   }  
 
 
-  return { API_URL, getDeposits, getFreeSaving,getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3 }
+  return { API_URL, getDeposits, getFreeSaving,getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp }
 })

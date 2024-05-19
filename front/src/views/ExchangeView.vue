@@ -21,14 +21,17 @@
       </select>
     </div>
     <div>
-      <h6 class="m-0 fw-light text-info fw-bold">바뀐 돈</h6>
+      <span class="m-0 fw-light text-info fw-bold">바뀐 돈</span>
+      <span class="m-0 fw-light fw-bold" v-if="date"> | </span>
+      <span class="m-0 fw-light text-info fw-bold" v-if="date">기준: {{ date }}</span>
+      
       <h2 class="fs-1 fw-bold mt-0">{{ changeAmount }} {{ toCurrency }}</h2>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
 const store = useFinanceStore()
 
@@ -47,8 +50,8 @@ const amount = ref(0)
 
 // 이제 django에서 받아온 바뀐 데이터를 여기다 저장
 const changeAmount = ref(0)
-
-
+// 환율적용날짜
+const date = ref(null)
 
 // django에 입력 통화와 변경할 통화 나라 보내주기
 import axios from 'axios'
@@ -66,9 +69,8 @@ const sendCountry = function () {
       money : amount.value
     }
   }).then((response) => {
-    console.log(response)
-    console.log(response.data.result)
     changeAmount.value = response.data.result
+    date.value = response.data.exchange_date
   }).catch((error) => {
     console.log(error)
   })
@@ -77,6 +79,18 @@ const sendCountry = function () {
 // 이제 입력 통화나 입력한 숫자나, 변결할 통화가 바뀔 때마다 sendCountry를 통해 새로운 데이터를 받아옴
 watch([fromCurrency, toCurrency, amount], () => {
   sendCountry()
+})
+
+onMounted(() => {
+  axios({
+    method: 'get',
+    url: `${store.API_URL}/exchange/api/`
+  }).then((respoonse) => {
+    console.log(respoonse.data)
+  }).catch((error) => {
+    console.log(error)
+  })
+  
 })
 
 </script>

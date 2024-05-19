@@ -1,7 +1,10 @@
 <template>
+  <div class="bg-info-subtle d-flex align-items-center justify-content-center" style="height: 100px;">
+    <h2 class="fw-bold">근처은행</h2>
+  </div>
   <div id="app" class="container">
-    <h1>근처은행</h1>
-    <KaKaoMap />
+      <KaKaoMap />
+    
   </div>
 </template>
 
