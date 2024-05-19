@@ -22,7 +22,7 @@
     </div>
     <div>
       <h6 class="m-0 fw-light text-info fw-bold">바뀐 돈</h6>
-      <h2 class="fs-1 fw-bold mt-0">{{ convertedAmount }} {{ toCurrency }}</h2>
+      <h2 class="fs-1 fw-bold mt-0">{{ changeAmount }} {{ toCurrency }}</h2>
     </div>
   </div>
 </template>
@@ -45,37 +45,10 @@ const fromCurrency = ref('미국 달러')
 const toCurrency = ref('한국 원')
 const amount = ref(0)
 
-const exchangeRates = {
-  '미국 달러': 1,
-  '유로': 0.85,
-  '일본 옌': 110,
-  '한국 원': 1100,
-  '위안화': 6.5,
-  '스위스 프랑': 0.92,
-  '캐나다 달러': 1.21,
-  '브루나이 달러': 1.33,
-  '바레인 디나르': 0.38,
-  '덴마아크 크로네': 6.24,
-  '영국 파운드': 0.72,
-  '태국 바트': 31,
-  '홍콩 달러': 7.76,
-  '싱가포르 달러': 1.34,
-  '스웨덴 크로나': 8.56,
-  '사우디 리얄': 3.75,
-  '뉴질랜드 달러': 1.4,
-  '노르웨이 크로네': 8.47,
-  '말레이지아 링기트': 4.14,
-  '쿠웨이트 디나르': 0.3,
-  '인도네시아 루피아': 14350,
-  '호주 달러': 1.29,
-  '아랍에미리트 디르함': 3.67
-}
+// 이제 django에서 받아온 바뀐 데이터를 여기다 저장
+const changeAmount = ref(0)
 
-const convertedAmount = computed(() => {
-  const fromRate = exchangeRates[fromCurrency.value] || 1
-  const toRate = exchangeRates[toCurrency.value] || 1
-  return ((amount.value * fromRate) / toRate).toFixed(2)
-})
+
 
 // django에 입력 통화와 변경할 통화 나라 보내주기
 import axios from 'axios'
@@ -83,7 +56,7 @@ const sendCountry = function () {
   // 정기 예금을 위한 axios
   axios({
     method: 'post',
-    url: `${store.API_URL}/exchange/calculate`,
+    url: `${store.API_URL}/exchange/calculate/`,
     data: {
       // 입력통화
       inputcountry : fromCurrency.value,
@@ -91,9 +64,11 @@ const sendCountry = function () {
       outputcountry: toCurrency.value,
       // 바꿀 돈
       money : amount.value
-    },
+    }
   }).then((response) => {
     console.log(response)
+    console.log(response.data.result)
+    changeAmount.value = response.data.result
   }).catch((error) => {
     console.log(error)
   })
