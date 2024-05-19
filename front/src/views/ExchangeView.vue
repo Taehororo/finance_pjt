@@ -1,21 +1,109 @@
 <template>
-  <div>
-    <h1>환율</h1>
+  <div class="container mt-5">
+    <h1>환율 변환기</h1>
+    <div class="mb-3">
+      <label for="fromCurrency" class="form-label">입력 통화를 선택하세요:</label>
+      <select id="fromCurrency" class="form-select" v-model="fromCurrency">
+        <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="amount" class="form-label">숫자를 입력하세요:</label>
+      <input type="number" id="amount" class="form-control" v-model="amount">
+    </div>
+    <div class="mb-3">
+      <label for="toCurrency" class="form-label">변환할 통화를 선택하세요:</label>
+      <select id="toCurrency" class="form-select" v-model="toCurrency">
+        <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
+      </select>
+    </div>
+    <div>
+      <h2>변환된 값: {{ convertedAmount }} {{ toCurrency }}</h2>
+    </div>
   </div>
 </template>
 
 <script setup>
-// import axios from 'axios'
-// axios({
-//     method: 'get',
-//     url: ``,
-//   }).then((response) => {
-//     console.log(response)
-//   }).catch((error) => {
-//     console.log(error)
-//   })
+import { ref, computed, watch } from 'vue'
+import { useFinanceStore } from '@/stores/finance'
+const store = useFinanceStore()
+
+const currencies = ref([
+  '미국 달러', '유로', '일본 옌', '한국 원', '위안화', '스위스 프랑', 
+  '캐나다 달러', '브루나이 달러', '바레인 디나르', '덴마아크 크로네', 
+  '영국 파운드', '태국 바트', '홍콩 달러', '싱가포르 달러', 
+  '스웨덴 크로나', '사우디 리얄', '뉴질랜드 달러', '노르웨이 크로네', 
+  '말레이지아 링기트', '쿠웨이트 디나르', '인도네시아 루피아', 
+  '호주 달러', '아랍에미리트 디르함'
+])
+
+const fromCurrency = ref('미국 달러')
+const toCurrency = ref('한국 원')
+const amount = ref(0)
+
+const exchangeRates = {
+  '미국 달러': 1,
+  '유로': 0.85,
+  '일본 옌': 110,
+  '한국 원': 1100,
+  '위안화': 6.5,
+  '스위스 프랑': 0.92,
+  '캐나다 달러': 1.21,
+  '브루나이 달러': 1.33,
+  '바레인 디나르': 0.38,
+  '덴마아크 크로네': 6.24,
+  '영국 파운드': 0.72,
+  '태국 바트': 31,
+  '홍콩 달러': 7.76,
+  '싱가포르 달러': 1.34,
+  '스웨덴 크로나': 8.56,
+  '사우디 리얄': 3.75,
+  '뉴질랜드 달러': 1.4,
+  '노르웨이 크로네': 8.47,
+  '말레이지아 링기트': 4.14,
+  '쿠웨이트 디나르': 0.3,
+  '인도네시아 루피아': 14350,
+  '호주 달러': 1.29,
+  '아랍에미리트 디르함': 3.67
+}
+
+const convertedAmount = computed(() => {
+  const fromRate = exchangeRates[fromCurrency.value] || 1
+  const toRate = exchangeRates[toCurrency.value] || 1
+  return ((amount.value * fromRate) / toRate).toFixed(2)
+})
+
+// django에 입력 통화와 변결할 통화 나라 보내주기
+import axios from 'axios'
+const sendCountry = function () {
+  // 정기 예금을 위한 axios
+  axios({
+    method: 'post',
+    url: `${store.API_URL}/exchange/calculate`,
+    data: {
+      // 입력통화
+      inputcountry : fromCurrency.value,
+      // 출력통화
+      outputcountry: toCurrency.value,
+      // 바꿀 돈
+      money : amount.value
+    },
+  }).then((response) => {
+    console.log(response)
+  }).catch((error) => {
+    console.log(error)
+  })
+}
+
+// 이제 입력 통화나 입력한 숫자나, 변결할 통화가 바뀔 때마다 sendCountry를 통해 새로운 데이터를 받아옴
+watch([fromCurrency, toCurrency, amount], () => {
+  sendCountry()
+})
+
 </script>
 
 <style scoped>
-
+h1 {
+  margin-bottom: 20px;
+}
 </style>
