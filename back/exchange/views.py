@@ -28,7 +28,7 @@ def get_exchange_rates(search_date):
     if response.status_code == 200:
         exchange_data = response.json()
         if exchange_data:  # 데이터가 비어 있지 않으면 반환
-            return exchange_data
+            return exchange_data, search_date_str
         else:  # 데이터가 비어 있으면 전날 데이터를 가져옴
             previous_date = search_date - timedelta(days=1)
             return get_exchange_rates(previous_date)
@@ -47,7 +47,7 @@ def calculate_exchange(request):
             
             # 오늘 날짜의 환율 데이터 가져오기
             today = datetime.today()
-            exchange_data = get_exchange_rates(today)
+            exchange_data, exchange_date = get_exchange_rates(today)
             if exchange_data is None:
                 return Response({'error': 'Failed to fetch exchange rates'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             
@@ -69,8 +69,9 @@ def calculate_exchange(request):
 
                 # 환율 계산
                 result = (amount / output_rate_value) * input_rate_value
+                result = round(result, 2)     # 결과를 소수점 아래 둘째 자리까지 반올림
                 # 계산된 환율 보내기
-                return Response({'result': result}, status=status.HTTP_200_OK)
+                return Response({'result': result, 'exchange_date': exchange_date}, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Invalid currency code'}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
