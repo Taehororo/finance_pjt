@@ -1,24 +1,28 @@
 <template>
-  <div class="container mt-5">
-    <h1>환율 변환기</h1>
+  <div class="bg-info-subtle d-flex align-items-center justify-content-center" style="height: 100px;">
+    <h2 class="fw-bold">환율 변환기</h2>
+  </div>
+
+  <div class="container mt-5 d-flex flex-column align-items-center">
     <div class="mb-3">
-      <label for="fromCurrency" class="form-label">입력 통화를 선택하세요:</label>
-      <select id="fromCurrency" class="form-select" v-model="fromCurrency">
+      <label for="fromCurrency" class="form-label text-info fw-bold">입력 통화를 선택하세요:</label>
+      <select id="fromCurrency" class="form-select fs-5" style="width: 300px;" v-model="fromCurrency">
         <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
       </select>
     </div>
     <div class="mb-3">
-      <label for="amount" class="form-label">숫자를 입력하세요:</label>
-      <input type="number" id="amount" class="form-control" v-model="amount">
+      <label for="amount" class="form-label text-info fw-bold">숫자를 입력하세요:</label>
+      <input type="number" id="amount" class="form-control fs-5 fw-bold" style="width: 300px;" v-model="amount">
     </div>
     <div class="mb-3">
-      <label for="toCurrency" class="form-label">변환할 통화를 선택하세요:</label>
-      <select id="toCurrency" class="form-select" v-model="toCurrency">
+      <label for="toCurrency" class="form-label text-info fw-bold">변환할 통화를 선택하세요:</label>
+      <select id="toCurrency" class="form-select fs-5" style="width: 300px;" v-model="toCurrency">
         <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
       </select>
     </div>
     <div>
-      <h2>변환된 값: {{ convertedAmount }} {{ toCurrency }}</h2>
+      <h6 class="m-0 fw-light text-info fw-bold">바뀐 돈</h6>
+      <h2 class="fs-1 fw-bold mt-0">{{ convertedAmount }} {{ toCurrency }}</h2>
     </div>
   </div>
 </template>
@@ -73,7 +77,7 @@ const convertedAmount = computed(() => {
   return ((amount.value * fromRate) / toRate).toFixed(2)
 })
 
-// django에 입력 통화와 변결할 통화 나라 보내주기
+// django에 입력 통화와 변경할 통화 나라 보내주기
 import axios from 'axios'
 const sendCountry = function () {
   // 정기 예금을 위한 axios

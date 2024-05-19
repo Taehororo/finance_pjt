@@ -12,8 +12,75 @@ export const useFinanceStore = defineStore('finance', () => {
   // 자유적금을 위한 배열
   const finances3 = ref([])
 
+
+  // django에서 authorization header를 위한 토큰
   const token = ref(null)
+
+  // 로그인한 상태냐 아니냐를 위한 함수
+  const isLogin = computed(() => {
+    if (token.value === null) {
+      return false
+    } else {
+      return true
+    }
+  })
+
+  // 회원가입 함수
+  const signUp = function (payload) {
+    // 1. 사용자 입력 데이터를 받아
+    // const username = payload.username
+    // const password1 = payload.password1
+    // const password2 = payload.password2
+    const { username, password1, password2 } = payload
+
+    // 2. axios로 django에 요청을 보냄
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/signup/`,
+      data: {
+        // username: username,
+        // password1: password1,
+        // password2: password2
+        username, password1, password2
+      }
+    })
+     .then((response) => {
+       console.log('회원가입 성공!')
+       const password = password1
+       logIn({ username, password })
+     })
+     .catch((error) => {
+       console.log(error)
+     })
+  }
+  // 로그인 로직
+  const logIn = function (payload) {
+    // 1. 사용자 입력 데이터를 받아
+    const { username, password } = payload
+    // 2. axios로 django에 요청을 보냄
+    axios({
+      method: 'post',
+      url: `${API_URL}/accounts/login/`,
+      data: {
+        username, password
+      }
+    })
+      .then((response) => {
+        // console.log('로그인 성공!')
+        // console.log(response)
+        // console.log(response.data.key)
+        // 3. 로그인 성공 후 응답 받은 토큰을 저장
+        token.value = response.data.key
+        router.push({ name : 'ArticleView' })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
   
+
   // django에서 정기예금 데이터 넣기
   const getDeposits = function () {
     axios({

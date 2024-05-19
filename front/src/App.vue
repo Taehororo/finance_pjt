@@ -1,12 +1,16 @@
 <script setup>
 import { RouterLink, RouterView, routerKey, useRouter } from 'vue-router'
-import Login from '@/components/Login.vue'
 
 const router = useRouter()
 
 const goLogin = function () {
   router.push({name:'Login'})
 }
+
+const goSignup = function () {
+  router.push({name:'Signup'})
+}
+
 </script>
 
 <template>
@@ -37,6 +41,7 @@ const goLogin = function () {
         </ul>
         <span class="navbar-text">
           <button type="button" class="btn btn-outline-dark" @click="goLogin">로그인</button>
+          <button type="button" class="btn btn-outline-dark ms-2" @click="goSignup">회원가입</button>
         </span>
       </div>
     </div>

@@ -1,13 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPageView from '@/views/MainPageView.vue'
-import CompareView from '@/views/CompareView.vue'
 import ExchangeView from '@/views/ExchangeView.vue'
 import NearBankView from '@/views/NearBankView.vue'
 import SuggestionView from '@/views/SuggestionView.vue'
-import Login from '@/components/Login.vue'
+// 예/적금 금리비교 관련
+import CompareView from '@/views/CompareView.vue'
 import CompareViewDeposit from '@/views/CompareViewDeposit.vue'
 import CompareViewFixedSaving from '@/views/CompareViewFixedSaving.vue'
 import CompareViewFreeSaving from '@/views/CompareViewFreeSaving.vue'
+
+// user 로그인 회원가입 관련
+import LoginView from '@/views/users/LoginView.vue'
+import SignUpView from '@/views/users/SignUpView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -49,8 +53,14 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: LoginView
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: SignUpView
     }
+    
   ]
 })
 
