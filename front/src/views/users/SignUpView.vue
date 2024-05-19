@@ -58,8 +58,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
+
+onMounted(() => {
+  // script src='//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js'이 코드를 쓸수 없기에 추가해준 것
+  const script = document.createElement('script');
+  script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
+  script.onload = () => {
+    // 외부 스크립트가 로드된 후에 실행할 코드를 작성합니다.
+    // 이 곳에서 해당 스크립트를 사용하는 코드를 작성합니다.
+  };
+  document.head.appendChild(script);
+})
 
 // 데이터 바인딩
 const name = ref('')
@@ -97,14 +108,36 @@ const signUp = () => {
 // 우편번호 찾기 기능
 const sample4_execDaumPostcode = () => {
   if (typeof daum !== 'undefined' && typeof daum.Postcode === 'function') {
+    const width = 500; // 창의 너비
+    const height = 600; // 창의 높이
+    const left = (window.innerWidth / 2) - (width / 2) + 20; // 살짝 오른쪽으로 이동
+    const top = (window.innerHeight / 2) - (height / 2);
+
+    const postcodeLayer = document.createElement('div');
+    postcodeLayer.style.position = 'fixed';
+    postcodeLayer.style.width = `${width}px`;
+    postcodeLayer.style.height = `${height}px`;
+    postcodeLayer.style.left = `${left}px`;
+    postcodeLayer.style.top = `${top}px`;
+    postcodeLayer.style.zIndex = 1000; // Ensure the layer is on top
+    postcodeLayer.style.border = '1px solid #ccc'; // 테두리 추가
+    postcodeLayer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)'; // 그림자 추가
+    postcodeLayer.id = 'postcodeLayer';
+    document.body.appendChild(postcodeLayer);
+
     new daum.Postcode({
       oncomplete: function(data) {
         // 우편번호와 주소 필드에 값 채우기
         document.getElementById('sample4_postcode').value = data.zonecode;
         document.getElementById('sample4_roadAddress').value = data.roadAddress;
         document.getElementById('sample4_jibunAddress').value = data.jibunAddress;
-      }
-    }).open();
+
+        // 팝업 레이어 제거
+        document.body.removeChild(postcodeLayer);
+      },
+      width: '100%',
+      height: '100%'
+    }).embed(postcodeLayer);
   } else {
     console.error('Daum postcode script is not loaded.');
   }
