@@ -11,7 +11,7 @@ from django.http import HttpResponse
 import pprint
 import re
 
-
+@api_view(['GET'])
 # Django와 외부 API를 통해 데이터를 가져와서 데이터베이스에 저장하는 뷰
 def get_deposit_products(request):
     # API 키와 URL을 설정
