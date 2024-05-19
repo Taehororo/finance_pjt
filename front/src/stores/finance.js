@@ -4,7 +4,7 @@ import axios from 'axios'
 
 
 export const useFinanceStore = defineStore('finance', () => {
-  const API_URL = 'http://127.0.0.1:8000/'
+  const API_URL = 'http://127.0.0.1:8000'
   // 예금을 위한 배열
   const finances = ref([])
   // 정기적금을 위한 배열
