@@ -76,3 +76,17 @@
 > | **inputcountry** | 미국 달러 |
 > | **outputcountry** | 한국 원 |
 > | **money** | 10 |
+
+ > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
+> 회원가입 요청<br>
+> http://127.0.0.1:8000/accounts/signup/ <br>
+> | **Body** &nbsp; <sub>form-data</sub>  |  |
+> | --- | --- |
+> | **name** | 사람이름 |
+> | **postcode** | 우편번호 |
+> | **road_address** | 도로명 |
+> | **jibun_address** | 지번주소 |
+> | **detail_address** | 상세주소 |
+> | **username** | 아이디 |
+> | **password1** | 비밀번호 |
+> | **password2** | 비밀번호 확인 |
