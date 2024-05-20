@@ -1,4 +1,5 @@
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
@@ -12,7 +13,7 @@ export const useFinanceStore = defineStore('finance', () => {
   // 자유적금을 위한 배열
   const finances3 = ref([])
 
-
+  const router = useRouter()
   // django에서 authorization header를 위한 토큰
   const token = ref(null)
 
@@ -66,12 +67,12 @@ export const useFinanceStore = defineStore('finance', () => {
       }
     })
       .then((response) => {
-        // console.log('로그인 성공!')
-        // console.log(response)
-        // console.log(response.data.key)
+        console.log('로그인 성공!')
+        console.log(response)
+        console.log(response.data.key)
         // 3. 로그인 성공 후 응답 받은 토큰을 저장
         token.value = response.data.key
-        router.push({ name : 'ArticleView' })
+        router.push({ name: 'MainPageView' })
       })
       .catch((error) => {
         console.log(error)

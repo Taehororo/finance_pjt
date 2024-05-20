@@ -1,6 +1,9 @@
 <script setup>
-import { RouterLink, RouterView, routerKey, useRouter } from 'vue-router'
+import { RouterLink, RouterView, routerKey, useRouter, useRoute } from 'vue-router'
+import { useFinanceStore } from './stores/finance'
 
+const store = useFinanceStore()
+const route = useRoute()
 const router = useRouter()
 
 const goLogin = function () {
@@ -9,6 +12,10 @@ const goLogin = function () {
 
 const goSignup = function () {
   router.push({name:'Signup'})
+}
+
+const goLogout = function () {
+  store.token = null
 }
 
 </script>
@@ -40,8 +47,14 @@ const goSignup = function () {
           </li>
         </ul>
         <span class="navbar-text">
-          <button type="button" class="btn btn-outline-dark" @click="goLogin">로그인</button>
-          <button type="button" class="btn btn-outline-dark ms-2" @click="goSignup">회원가입</button>
+          <div v-if="store.token">
+            <button type="button" class="btn btn-outline-dark" @click="goLogout">로그아웃</button>
+          </div>
+          <div v-else>
+            <button type="button" class="btn btn-outline-dark" @click="goLogin">로그인</button>
+            <button type="button" class="btn btn-outline-dark ms-2" @click="goSignup">회원가입</button>
+          </div>
+          
         </span>
       </div>
     </div>
