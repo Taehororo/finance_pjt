@@ -21,6 +21,7 @@
             @mouseleave="highlightedID = null"
             :class="{ highlightedRow: highlightedID === finance.base_product_id }"
             >
+              <!-- {{ finance.base_product_id }} -->
               <td :class="{ highlightedRow: highlightedID === finance.base_product_id }">{{ finance.kor_co_nm }}</td>
               <td :class="{ highlightedRow: highlightedID === finance.base_product_id }">{{ finance.fin_prdt_nm }}</td>
               <td :class="{ highlightedRow: highlightedID === finance.base_product_id, highlightedCell: selectedText === '1개월' }">{{ getInterestRate(finance.options, '1') }}</td>

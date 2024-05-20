@@ -1,43 +1,53 @@
 <template>
-
-    <div class="map_wrap">
-      <div id="map" style="width:100%;height:700px;position:relative;overflow:hidden;"></div>
-      <div id="menu_wrap" class="bg_white">
-        <div class="option">
-        </div>
-        
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
+  <div class="map_wrap">
+    <div id="map" style="width:100%;height:700px;position:relative;overflow:hidden;"></div>
+    <div id="menu_wrap" class="bg_white">
+      <div class="option">
       </div>
+
+      <ul id="placesList"></ul>
+      <div id="pagination"></div>
     </div>
+  </div>
 </template>
 
 <script>
-let number = 1
 export default {
   name: 'BankMapComponent',
+  props: {
+    initialAddress: {
+      type: String,
+      required: true
+    },
+    userAddress: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       map: null,
       geocoder: null,
       ps: null,
       infowindow: null,
-      // 여기다가 유저 정보 넣기
-      address: '동판교로 275',
-      ////////////////////
       markers: [],
+      number: 1 // 숫자 변수 추가
     };
+  },
+  watch: {
+    userAddress(newAddress) {
+      this.geocoder.addressSearch(newAddress, this.addressSearchCB)
+    }
   },
   mounted() {
     this.initMap();
-    this.geocoder.addressSearch(this.address, this.addressSearchCB)
-    number = 1
+    this.geocoder.addressSearch(this.initialAddress, this.addressSearchCB)
   },
   methods: {
     initMap() {
       const mapContainer = document.getElementById('map');
       const mapOption = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
+        center: new kakao.maps.LatLng(37.500913, 127.036422), // 역삼역 근처 좌표
         level: 3,
       };
       this.map = new kakao.maps.Map(mapContainer, mapOption);
@@ -51,7 +61,7 @@ export default {
         this.map.setCenter(coords);
         this.searchBanks(coords);
       } else {
-        alert('주소 검색 결과가 존재하지 않습니다.');
+        alert('검색된 주소가 없습니다.');
       }
     },
     searchBanks(coords) {
@@ -76,6 +86,7 @@ export default {
 
       this.removeAllChildNods(listEl);
       this.removeMarker();
+      this.number = 1; // 숫자 초기화
 
       places.forEach((place, i) => {
         const placePosition = new kakao.maps.LatLng(place.y, place.x);
@@ -109,18 +120,18 @@ export default {
       const el = document.createElement('li');
       let itemStr = `<span class="markerbg marker_${index + 1}"></span>
                      <div class="info">
-                       <h>${number}. ${place.place_name}</h>`;
+                       <h>${this.number}. ${place.place_name}</h>`;
       if (place.road_address_name) {
-        itemStr += `<span>도로명)${place.road_address_name}</span>
-                    <p class="jibun gray">지번)${place.address_name}</p>`;
+        itemStr += `<span>도로명) ${place.road_address_name}</span>
+                    <p class="jibun gray">지번) ${place.address_name}</p>`;
       } else {
         itemStr += `<span>${place.address_name}</span>`;
       }
-      
+
       itemStr += '<hr></hr>'
       el.innerHTML = itemStr;
       el.className = 'item';
-      number += 1
+      this.number += 1; // 숫자 증가
       return el;
     },
     addMarker(position, idx) {
@@ -149,17 +160,7 @@ export default {
       while (paginationEl.hasChildNodes()) {
         paginationEl.removeChild(paginationEl.lastChild);
       }
-      for (let i = 1; i <= pagination.last; i++) {
-        const el = document.createElement('a');
-        el.href = "#";
-        el.innerHTML = i;
-        if (i === pagination.current) {
-          el.className = 'on';
-        } else {
-          el.onclick = () => pagination.gotoPage(i);
-        }
-        paginationEl.appendChild(el);
-      }
+     
     },
     displayInfowindow(marker, title) {
       const content = `<div style="padding:5px;z-index:1;">${title}</div>`;
@@ -174,6 +175,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 .map_wrap,
