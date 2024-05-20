@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'deposit',
     'saving',
     'exchange',
+    'articles',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
