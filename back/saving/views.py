@@ -1,6 +1,7 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.conf import settings
@@ -13,6 +14,7 @@ import re
 
 
 # Django와 외부 API를 통해 데이터를 가져와서 데이터베이스에 저장하는 뷰
+@api_view(['GET'])
 def get_saving_products(request):
     # API 키와 URL을 설정
     API_KEY = settings.DEPOSIT_SAVING_API_KEY
@@ -209,3 +211,39 @@ def free_product_list(request):
     # pprint.pprint(serializer.data)
 
     return Response(serializer.data)
+
+# 정기적금 상품 찜하기 기능
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_fixed_saving_product(request, product_id):
+    user = request.user
+    product = get_object_or_404(FixedSavingProductsBaseInfo, base_product_id=product_id)
+    
+    if product in user.liked_fixed_saving_products.all():
+        user.liked_fixed_saving_products.remove(product)
+        liked = False
+        message = '해당 정기적금 상품이 찜한 목록에서 삭제되었습니다.'
+    else:
+        user.liked_fixed_saving_products.add(product)
+        liked = True
+        message = '해당 정기적금 상품이 찜한 목록에 추가되었습니다.'
+    
+    return Response({'message': message}, status=status.HTTP_200_OK)
+
+# 자유적금 상품 좋아요 기능
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_free_saving_product(request, product_id):
+    user = request.user
+    product = get_object_or_404(FreeSavingProductsBaseInfo, base_product_id=product_id)
+    
+    if product in user.liked_free_saving_products.all():
+        user.liked_free_saving_products.remove(product)
+        liked = False
+        message = '해당 자유적금 상품이 찜한 목록에서 삭제되었습니다.'
+    else:
+        user.liked_free_saving_products.add(product)
+        liked = True
+        message = '해당 자유적금 상품이 찜한 목록에 추가되었습니다.'
+    
+    return Response({'message': message, 'liked': liked}, status=status.HTTP_200_OK)

@@ -1,6 +1,7 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.conf import settings
@@ -113,3 +114,20 @@ def product_list(request):
 
     return Response(serializer.data)
     
+# 예금 상품 찜하기 기능
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def like_deposit_product(request, product_id):
+    user = request.user
+    product = get_object_or_404(DepositProductsBaseInfo, base_product_id=product_id)
+    
+    if product in user.liked_deposit_products.all():
+        user.liked_deposit_products.remove(product)
+        liked = False
+        message = '해당 예금 상품이 찜한 목록에서 삭제되었습니다.'
+    else:
+        user.liked_deposit_products.add(product)
+        liked = True
+        message = '해당 예금 상품이 찜한 목록에 추가되었습니다.'
+    
+    return Response({'message': message, 'liked': liked}, status=status.HTTP_200_OK)

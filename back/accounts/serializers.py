@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from deposit.serializers import DepositProductsBaseInfoSerializer
+from saving.serializers import FixedSavingProductsBaseInfoSerializer, FreeSavingProductsBaseInfoSerializer
 
 User = get_user_model()
 
@@ -32,6 +34,10 @@ class CustomRegisterSerializer(RegisterSerializer):
 
 
 class CustomUserDetailsSerializer(serializers.ModelSerializer):
+    liked_deposit_products = DepositProductsBaseInfoSerializer(many=True, read_only=True)
+    liked_fixed_saving_products = FixedSavingProductsBaseInfoSerializer(many=True, read_only=True)
+    liked_free_saving_products = FreeSavingProductsBaseInfoSerializer(many=True, read_only=True)
+    
     class Meta:
         model = User
-        fields = ['username', 'email', 'name', 'postcode', 'roadaddress', 'jibunaddress', 'detailaddress']
+        fields = ['username', 'email', 'name', 'postcode', 'roadaddress', 'jibunaddress', 'detailaddress', 'liked_deposit_products', 'liked_fixed_saving_products', 'liked_free_saving_products']
