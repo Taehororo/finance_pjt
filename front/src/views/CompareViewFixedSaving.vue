@@ -31,7 +31,7 @@
               <td :class="{ highlightedRow: highlightedID === finance.base_product_id, highlightedCell: selectedText === '24개월' }">{{ getInterestRate(finance.options, '24') }}</td>
               <td :class="{ highlightedRow: highlightedID === finance.base_product_id, highlightedCell: selectedText === '36개월' }">{{ getInterestRate(finance.options, '36') }}</td>
             </tr>
-            <DepostiDetail v-if="finance" :finance="finance" @close="finance = null" />
+            <DepostiDetail v-if="finance" :finance="finance" :kind="kind" @close="finance = null" />
           </tbody>
       </table>
   </div>
@@ -45,6 +45,9 @@ const store = useFinanceStore()
 
 const highlightedID = ref(null)
 const finance = ref(null)
+
+// DepositDetail에서 찜하기 버튼을 위해 이게 무엇에 관한건지 알려주는 변수 추가
+const kind = ref('saving/like_fixed/')
 
 const showPopup = (item) => {
   finance.value = item

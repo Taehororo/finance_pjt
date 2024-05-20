@@ -1,4 +1,5 @@
 <script setup>
+
 import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import { useFinanceStore } from './stores/finance'
 import { ref } from 'vue'
