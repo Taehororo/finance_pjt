@@ -21,9 +21,9 @@
       <!-- 로그인한 사용자만 이버튼이 보이도록 -->
       <div v-if="store.token">
         <!-- 이미 찜목록에 추가한 사용자 -->
-        <button type="button" class="btn btn-info" @click="checkLiked" v-if="liked">찜취소</button>
+        <button type="button" class="btn btn-info" @click="checkLiked" v-if="liked===true">찜취소</button>
         <!-- 찜목록에 들어가있지 않은 사용자 -->
-        <button type="button" class="btn btn-info" @click="checkLiked" v-else>찜하기</button>
+        <button type="button" class="btn btn-info" @click="checkLiked" v-if="liked===false">찜하기</button>
       </div>
       
     </div>
@@ -51,46 +51,45 @@ const props = defineProps({
 
 // 찜하기 버튼이 나올지 찜취소 버튼이 나올지 설정을 위해 처음에 이게 user의 db안에 들어가있는지 받아온다.
 onMounted(() => {
-  axios({
-    method: 'post',
-    // 수정필요
-    url: `${store.API_URL}/${props.kind}check/${props.finance.base_product_id}/`,
-    headers: {
-    Authorization: `Token ${store.token}`
-  } 
-  }).then((respoonse) => {
-    console.log(respoonse)
-    console.log(respoonse.data)
-    if (respoonse.data.liekd === false) {
-      liked.value = false
-    } else {
-      liked.value = true
-    }
-  }).catch((error) => {
-    console.log(error)
-  })
-
+  if (store.token) {
+    axios({
+      method: 'get',
+      // 수정필요
+      url: `${store.API_URL}/${props.kind}check/${props.finance['base_product_id']}/`,
+      headers: {
+        Authorization: `Token ${store.token}`
+      }
+    }).then((respoonse) => {
+      if (respoonse.data.liked === false) {
+        liked.value = false
+      } else {
+        liked.value = true
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
 })
 
 // 찜하기, 찜취소 버튼을 눌렀을때 django에 db를 보내고 그결과를 리턴받는다.
 const checkLiked = function () {
    axios({
     method: 'post',
-    url: `${store.API_URL}/${props.kind}${props.finance.base_product_id}/`,
+    url: `${store.API_URL}/${props.kind}${props.finance['base_product_id']}/`,
     headers: {
       Authorization: `Token ${store.token}`
      },
     data: {
-      base_product_id : finance.base_product_id
+      base_product_id : props.finance['base_product_id']
     }
-  }).then((respoonse) => {
-    console.log(respoonse)
-    if (respoonse.data.liekd === false) {
+   }).then((respoonse) => {
+    console.log(respoonse.data['message'])
+    if (respoonse.data.liked === false) {
       liked.value = false
     } else {
       liked.value = true
     }
-    console.log(respoonse.data)
+
   }).catch((error) => {
     console.log(error)
   })
