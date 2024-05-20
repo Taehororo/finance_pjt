@@ -140,7 +140,7 @@
 
 > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
 > 정기적금상품 찜하기 <br>
-> http://127.0.0.1:8000/like_fixed/like/<<int:product_id>>/
+> http://127.0.0.1:8000/saving/like_fixed/<<int:product_id>>/
 > | **Request Header**  |  |
 > | --- | --- |
 > | **Authorization** | Token 토큰 |  
@@ -154,7 +154,7 @@
 
 > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
 > 자유적금상품 찜하기 <br>
-> http://127.0.0.1:8000/like_free/like/<<int:product_id>>/
+> http://127.0.0.1:8000/saving/like_free/<<int:product_id>>/
 > | **Request Header**  |  |
 > | --- | --- |
 > | **Authorization** | Token 토큰 |  
