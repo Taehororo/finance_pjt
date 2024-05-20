@@ -13,6 +13,10 @@ export const useFinanceStore = defineStore('finance', () => {
   // 자유적금을 위한 배열
   const finances3 = ref([])
 
+  // 지금 로그인한 사용자 정보를 저장하기 위한 배열
+  const userInfo = ref([])
+  const userId = ref(0)
+
   const router = useRouter()
   // django에서 authorization header를 위한 토큰
   const token = ref(null)
@@ -32,14 +36,14 @@ export const useFinanceStore = defineStore('finance', () => {
     // const username = payload.username
     // const password1 = payload.password1
     // const password2 = payload.password2
-    const { name, username, password1, password2, postcode, roadAddress, jibunAddress, detailAddress } = payload
+    const { name, username, email, password1, password2, postcode, roadAddress, jibunAddress, detailAddress } = payload
 
     // 2. axios로 django에 요청을 보냄
     axios({
       method: 'post',
       url: `${API_URL}/accounts/signup/`,
       data: {
-        name, username, password1, password2, postcode,
+        name, username, email, password1, password2, postcode,
         roadaddress: roadAddress,
         jibunaddress : jibunAddress,
         detailaddress : detailAddress
@@ -137,5 +141,5 @@ export const useFinanceStore = defineStore('finance', () => {
   }  
 
 
-  return { API_URL, getDeposits, getFreeSaving,getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp }
+  return { API_URL, getDeposits, getFreeSaving, getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp, userInfo, userId }
 })

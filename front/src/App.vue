@@ -7,6 +7,7 @@ const route = useRoute()
 const router = useRouter()
 
 const goLogin = function () {
+  // 로그인했을 때 db에서 사용자 정보 가져오기
   router.push({name:'Login'})
 }
 
@@ -16,6 +17,11 @@ const goSignup = function () {
 
 const goLogout = function () {
   store.token = null
+}
+
+const goProfile = function () {
+  // 이제 여기다가 store에서 로그인을 통해 가져온 사용자 정보를 통해 profile로 들어가기
+  router.push({name:'Profile',params: {'userid': store.userId}})
 }
 
 </script>
@@ -48,6 +54,7 @@ const goLogout = function () {
         </ul>
         <span class="navbar-text">
           <div v-if="store.token">
+            <button type="button" class="btn btn-outline-dark" @click="goProfile">프로필</button>
             <button type="button" class="btn btn-outline-dark" @click="goLogout">로그아웃</button>
           </div>
           <div v-else>

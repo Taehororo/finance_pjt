@@ -12,6 +12,10 @@ import CompareViewFreeSaving from '@/views/CompareViewFreeSaving.vue'
 // user 로그인 회원가입 관련
 import LoginView from '@/views/users/LoginView.vue'
 import SignUpView from '@/views/users/SignUpView.vue'
+
+// user profile 화면
+import ProfileView from '@/views/users/ProfileView.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -59,6 +63,11 @@ const router = createRouter({
       path: '/signup',
       name: 'Signup',
       component: SignUpView
+    },
+    {
+      path: '/profile/:userid',
+      name: 'Profile',
+      component: LoginView
     }
     
   ]

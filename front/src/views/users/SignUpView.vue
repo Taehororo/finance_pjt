@@ -40,6 +40,29 @@
           <label for="username" class="form-label">아이디</label>
           <input type="text" v-model.trim="username" id="username" class="form-control">
         </div>
+
+        <!-- 이메일 입력 -->
+        <div class="form-group mb-3">
+          <label for="email_id" class="form-label">이메일</label>
+          <div class="input-group">
+            <input type="text" v-model.trim="emailId" id="email_id" class="form-control form_w200" placeholder="이메일"
+              maxlength="18" title="이메일 아이디">
+            <span class="input-group-text">@</span>
+            <input type="text" v-model.trim="emailDomain" id="email_domain" class="form-control form_w200"
+              placeholder="이메일 도메인" maxlength="18" title="이메일 도메인">
+            <select class="form-select" title="이메일 도메인 주소 선택" @change="setEmailDomain($event.target.value)">
+              <option value="">-선택-</option>
+              <option value="naver.com">naver.com</option>
+              <option value="gmail.com">gmail.com</option>
+              <option value="hanmail.net">hanmail.net</option>
+              <option value="hotmail.com">hotmail.com</option>
+              <option value="korea.com">korea.com</option>
+              <option value="nate.com">nate.com</option>
+              <option value="yahoo.com">yahoo.com</option>
+            </select>
+          </div>
+        </div>
+
         <!-- 비밀번호 입력 -->
         <div class="form-group mb-3">
           <label for="password1" class="form-label">비밀번호</label>
@@ -75,15 +98,43 @@ onMounted(() => {
 // 데이터 바인딩
 const name = ref('')
 const username = ref('')
+const emailId = ref('')
+const emailDomain = ref('')
 const password1 = ref('')
 const password2 = ref('')
 const store = useFinanceStore()
 
+// 이메일 도메인 설정 함수
+const setEmailDomain = (domain) => {
+  emailDomain.value = domain
+}
+
 // 회원가입 함수
 const signUp = () => {
+  const email = `${emailId.value}@${emailDomain.value}`
+  const emailRule = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+
+  if (!emailId.value) {
+    alert('이메일을 입력해주세요')
+    document.getElementById('email_id').focus()
+    return false
+  }
+
+  if (!emailDomain.value) {
+    alert('도메인을 입력해주세요')
+    document.getElementById('email_domain').focus()
+    return false
+  }
+
+  if (!emailRule.test(email)) {
+    alert('이메일을 형식에 맞게 입력해주세요.')
+    return false
+  }
+
   const payload = {
     name: name.value,
     username: username.value,
+    email: email,
     password1: password1.value,
     password2: password2.value,
     postcode: document.getElementById('sample4_postcode').value,
@@ -97,6 +148,8 @@ const signUp = () => {
   // 회원가입 후 입력 필드 초기화
   name.value = ''
   username.value = ''
+  emailId.value = ''
+  emailDomain.value = ''
   password1.value = ''
   password2.value = ''
   document.getElementById('sample4_postcode').value = ''
@@ -126,7 +179,7 @@ const sample4_execDaumPostcode = () => {
     document.body.appendChild(postcodeLayer);
 
     new daum.Postcode({
-      oncomplete: function(data) {
+      oncomplete: function (data) {
         // 우편번호와 주소 필드에 값 채우기
         document.getElementById('sample4_postcode').value = data.zonecode;
         document.getElementById('sample4_roadAddress').value = data.roadAddress;
@@ -151,7 +204,8 @@ const sample4_execDaumPostcode = () => {
   align-items: flex-start;
   justify-content: center;
   background: #f8f9fa;
-  padding-top: 80px; /* 폼을 위로 올리기 위한 여백 조정 */
+  padding-top: 80px;
+  /* 폼을 위로 올리기 위한 여백 조정 */
 }
 
 .signup-form {
@@ -160,16 +214,40 @@ const sample4_execDaumPostcode = () => {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px; /* 더 직사각형으로 만들기 위한 최대 너비 설정 */
+  max-width: 500px;
+  /* 더 직사각형으로 만들기 위한 최대 너비 설정 */
 }
 
 .logo {
-  width: 50px; /* 로고 이미지 크기 조정 */
+  width: 50px;
+  /* 로고 이미지 크기 조정 */
   height: 50px;
 }
 
 .form-label {
   font-weight: bold;
+}
+
+.form-group .input-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-group .input-group .form-control.form_w200 {
+  flex: 1;
+  max-width: 200px;
+}
+
+.form-group .input-group .input-group-text {
+  padding: 0.375rem 0.75rem;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+}
+
+.form-group .input-group .form-select {
+  flex: 1;
+  max-width: 200px;
 }
 
 .btn-primary {
