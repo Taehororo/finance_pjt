@@ -38,7 +38,10 @@ export const useFinanceStore = defineStore('finance', () => {
       method: 'post',
       url: `${API_URL}/accounts/signup/`,
       data: {
-        name, username, password1, password2, postcode, roadAddress, jibunAddress, detailAddress
+        name, username, password1, password2, postcode,
+        roadaddress: roadAddress,
+        jibunaddress : jibunAddress,
+        detailaddress : detailAddress
       }
     })
      .then((response) => {
