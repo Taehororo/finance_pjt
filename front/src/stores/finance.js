@@ -15,7 +15,7 @@ export const useFinanceStore = defineStore('finance', () => {
 
   // 지금 로그인한 사용자 정보를 저장하기 위한 배열
   const userInfo = ref([])
-  const userId = ref(0)
+  const userId = ref(null)
 
   const router = useRouter()
   // django에서 authorization header를 위한 토큰
@@ -72,10 +72,24 @@ export const useFinanceStore = defineStore('finance', () => {
     })
       .then((response) => {
         console.log('로그인 성공!')
-        console.log(response)
-        console.log(response.data.key)
+        // console.log(response)
+        // console.log(response.data.key)
         // 3. 로그인 성공 후 응답 받은 토큰을 저장
         token.value = response.data.key
+        // 로그인성공후 로그이한 사용자의 정보를 받아오기
+        axios({
+          method: 'get',
+          url: `${API_URL}/accounts/user/`,
+          headers: {
+            Authorization: `Token ${token.value}`
+          }
+        }).then((response) => {
+          console.log(response.data)
+          userInfo.value = response.data
+          userId.value = userInfo.value['username']
+        }).catch((error) => {
+          console.log(error)
+        })
         router.push({ name: 'MainPageView' })
       })
       .catch((error) => {

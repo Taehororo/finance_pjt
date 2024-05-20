@@ -3,20 +3,26 @@ import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import { useFinanceStore } from './stores/finance'
 import { ref } from 'vue'
 
+// 상태 관리와 라우터 관련 설정
 const store = useFinanceStore()
 const route = useRoute()
 const router = useRouter()
 
+// 화면 깜빡임 효과를 위한 상태 변수
 const isScreenBlinking = ref(false)
 
+// 로그인 페이지로 이동하는 함수
 const goLogin = function () {
   router.push({ name: 'Login' })
 }
 
+// 회원가입 페이지로 이동하는 함수
 const goSignup = function () {
   router.push({ name: 'Signup' })
 }
 
+// 로그아웃 함수
+// 화면 깜빡임 효과를 주고, 토큰을 제거한 후 메인 페이지로 리디렉션
 const goLogout = function () {
   isScreenBlinking.value = true
   store.token = null
@@ -26,22 +32,28 @@ const goLogout = function () {
   }, 500)
 }
 
+// 프로필 페이지로 이동하는 함수
+// 로그인된 사용자의 ID를 사용하여 프로필 페이지로 이동
 const goProfile = function () {
   router.push({ name: 'Profile', params: { 'userid': store.userId } })
 }
 </script>
 
 <template>
+  <!-- 화면 깜빡임 효과를 적용할 div -->
   <div :class="{ 'screen-blink': isScreenBlinking }" class="container">
     <nav class="navbar navbar-expand-lg bg-body">
       <div class="container-fluid">
+        <!-- 메인 페이지 링크 및 로고 -->
         <RouterLink :to="{ name: 'MainPageView' }" class="navbar-brand fs-1">THB<span class="fs-5">ank</span>
           <img src="@/assets/images/file.png" alt="하얀고래비트고인">
         </RouterLink>
+        <!-- 반응형 메뉴 버튼 -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
           aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+        <!-- 네비게이션 링크들 -->
         <div class="collapse navbar-collapse" id="navbarText">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
@@ -57,6 +69,7 @@ const goProfile = function () {
               <RouterLink :to="{ name: 'SuggestionView' }" class="nav-link active">상품 추천</RouterLink>
             </li>
           </ul>
+          <!-- 로그인 상태에 따른 버튼 표시 -->
           <span class="navbar-text">
             <!-- 로그인 되어있을때 -->
             <div v-if="store.token">
@@ -73,15 +86,15 @@ const goProfile = function () {
       </div>
     </nav>
 
-    <!-- 삭제해라 -->
+    <!-- 임시 링크들 (나중에 삭제할 것) -->
     <p>나중에 삭제할것</p>
     <a href="http://127.0.0.1:8000/deposit/api">예금 db 생성</a>
     <span>|</span>
     <a href="http://127.0.0.1:8000/saving/api">적금 db 생성</a>
-    <!-- 삭제해라 -->
   </div>
-  <RouterView :class="{ 'screen-blink': isScreenBlinking }"/>
-  </template>
+  <!-- 화면 깜빡임 효과를 적용할 RouterView -->
+  <RouterView :class="{ 'screen-blink': isScreenBlinking }" />
+</template>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Jua&display=swap');
@@ -109,4 +122,5 @@ html {
 
 .screen-blink {
   animation: screen-blink 0.5s ease-in-out;
-}</style>
+}
+</style>
