@@ -16,6 +16,9 @@ import SignUpView from '@/views/users/SignUpView.vue'
 // user profile 화면
 import ProfileView from '@/views/users/ProfileView.vue'
 
+// 게시판
+import ArticlesView from '@/views/ArticlesView.vue'
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -68,6 +71,11 @@ const router = createRouter({
       path: '/profile/:userid',
       name: 'Profile',
       component: ProfileView
+    },
+    {
+      path: '/articles',
+      name: 'articles',
+      component: ArticlesView
     }
     
   ]

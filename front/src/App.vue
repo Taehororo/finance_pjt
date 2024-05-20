@@ -71,6 +71,9 @@ const goProfile = function () {
             <li class="nav-item">
               <RouterLink :to="{ name: 'SuggestionView' }" class="nav-link active">상품 추천</RouterLink>
             </li>
+            <li class="nav-item">
+                <RouterLink :to="{ name: 'articles' }" class="nav-link active">게시판</RouterLink>
+            </li>
           </ul>
           <!-- 로그인 상태에 따른 버튼 표시 -->
           <span class="navbar-text">
