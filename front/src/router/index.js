@@ -18,6 +18,10 @@ import ProfileView from '@/views/users/ProfileView.vue'
 
 // 게시판
 import ArticlesView from '@/views/articles/ArticlesView.vue'
+import ArticlesViewCreate from '@/views/articles/ArticlesViewCreate.vue'
+import ArticlesViewDetail from '@/views/articles/ArticlesViewDetail.vue'
+import ArticlesViewUpdate from '@/views/articles/ArticlesViewUpdate.vue'
+import ArticlesViewAll from '@/views/articles/ArticlesViewAll.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,7 +79,14 @@ const router = createRouter({
     {
       path: '/articles',
       name: 'articles',
-      component: ArticlesView
+      component: ArticlesView,
+      children: [
+        {path: 'all', name: 'articleall', component: ArticlesViewAll },
+        {path: 'create', name: 'articlecreate', component: ArticlesViewCreate },
+        //  variable routing 필요 path 수정필요
+        {path: 'detail/:articleid', name: 'articledetail', component: ArticlesViewDetail },
+        {path: 'update/:articleid', name: 'articleupdate', component: ArticlesViewUpdate },
+      ]
     }
     
   ]
