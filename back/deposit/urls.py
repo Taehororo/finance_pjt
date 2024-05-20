@@ -5,4 +5,5 @@ app_name = 'deposit'
 urlpatterns = [
     path('api/', views.get_deposit_products),
     path('products/', views.product_list),
+    path('like/<int:product_id>/', views.like_deposit_product),
 ]

@@ -7,7 +7,7 @@
 ![](https://img.shields.io/static/v1?label=&message=EMIT&color=brightgreen)
 ![](https://img.shields.io/static/v1?label=&message=ON&color=blue) 
  
-### API Description
+## API Description
  
 > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 예금 api 불러와서 DB에 저장 <br>
@@ -19,7 +19,8 @@
 
 <br>
 <hr>
-<br>
+
+### 전체, 특정 상품 조회
 
  > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > (DB에 저장된) 전체 예금상품 목록조회 <br>
@@ -61,7 +62,8 @@
 
 <br>
 <hr>
-<br>
+
+### 환율계산
 
  > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 환율계산 요청 불러오기 <br>
@@ -79,7 +81,8 @@
 
 <br>
 <hr>
-<br>
+
+### 회원가입, 로그인, 프로필조회
 
  > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
 > 회원가입 요청<br>
@@ -115,4 +118,50 @@
 > http://127.0.0.1:8000/accounts/user/
 > | **Request Header**  |  |
 > | --- | --- |
-> | **Authorization** | Token 토큰 |
+> | **Authorization** | Token 토큰 |  
+
+<br>
+<hr>
+
+### 찜하기 기능
+> ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
+> 예금상품 찜하기 <br>
+> http://127.0.0.1:8000/deposit/like/<<int:product_id>>/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+> 
+> | **Response**  |  |
+> | --- | --- |
+> {
+>    "message": "해당 예금 상품이 찜한 목록에 추가되었습니다.",
+>    "liked": true
+>  }
+
+> ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
+> 정기적금상품 찜하기 <br>
+> http://127.0.0.1:8000/like_fixed/like/<<int:product_id>>/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+> 
+> | **Response**  |  |
+> | --- | --- |
+> {
+>    "message": "해당 정기적금 상품이 찜한 목록에 추가되었습니다.",
+>    "liked": true
+>  }
+
+> ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
+> 자유적금상품 찜하기 <br>
+> http://127.0.0.1:8000/like_free/like/<<int:product_id>>/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+> 
+> | **Response**  |  |
+> | --- | --- |
+> {
+>    "message": "해당 자유적금 상품이 찜한 목록에 추가되었습니다.",
+>    "liked": true
+>  }
