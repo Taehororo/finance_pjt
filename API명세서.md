@@ -205,3 +205,63 @@
 > {
 >    "liked": true
 > }
+>
+<br>
+<hr>
+
+### 게시판 CRUD
+> ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
+> 게시글 목록 조회<br>
+> http://127.0.0.1:8000/articles/
+>
+
+> ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
+> 게시글 생성 <br>
+> http://127.0.0.1:8000/articles/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+>
+> | **Body** &nbsp; <sub>form-data</sub>  |  |
+> | --- | --- |
+> | **title** | 게시글 제목입니다 |
+> | **content** | 게시글 내용입니다 |
+
+<br>
+<hr>
+
+> ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
+> 게시글 상세 조회<br>
+> http://127.0.0.1:8000/articles/2/
+>
+
+
+>![](https://img.shields.io/static/v1?label=&message=PUT&color=blue)<br>
+> 게시글 전체 수정<br>
+> http://127.0.0.1:8000/articles/2/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+>
+> | **Body** &nbsp; <sub>form-data</sub>  |  |
+> | --- | --- |
+> | **title** | 게시글 제목 수정 |
+> | **content** | 게시글 내용 수정 |
+
+>![](https://img.shields.io/static/v1?label=&message=PATCH&color=purple)<br>
+> 게시글 부분 수정<br>
+> http://127.0.0.1:8000/articles/2/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+>
+> | **Body** &nbsp; <sub>form-data</sub>  |  |
+> | --- | --- |
+> | **content** | 게시글 내용만 수정 |
+
+>![](https://img.shields.io/static/v1?label=&message=DELETE&color=red)<br>
+> 게시글 삭제<br>
+> http://127.0.0.1:8000/articles/2/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
