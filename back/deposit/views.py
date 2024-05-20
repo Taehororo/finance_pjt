@@ -131,3 +131,14 @@ def like_deposit_product(request, product_id):
         message = '해당 예금 상품이 찜한 목록에 추가되었습니다.'
     
     return Response({'message': message, 'liked': liked}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_like_deposit_product(request, product_id):
+    user = request.user
+    product = get_object_or_404(DepositProductsBaseInfo, base_product_id=product_id)
+    # serializer = DepositProductsBaseInfoSerializer(product)
+    liked = product in user.liked_deposit_products.all()
+
+    return Response({'liked': liked}, status=status.HTTP_200_OK)
