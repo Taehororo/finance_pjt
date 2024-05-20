@@ -29,3 +29,9 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.detailaddress = self.cleaned_data.get('detailaddress')
         user.save()
         return user
+
+
+class CustomUserDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'name', 'postcode', 'roadaddress', 'jibunaddress', 'detailaddress']
