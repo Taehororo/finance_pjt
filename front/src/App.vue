@@ -1,12 +1,10 @@
 <script setup>
-
 import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import { useFinanceStore } from './stores/finance'
 import { ref } from 'vue'
 
 // 상태 관리와 라우터 관련 설정
 const store = useFinanceStore()
-const route = useRoute()
 const router = useRouter()
 
 // 화면 깜빡임 효과를 위한 상태 변수
@@ -40,6 +38,18 @@ const goLogout = function () {
 const goProfile = function () {
   router.push({ name: 'Profile', params: { 'userid': store.userId } })
 }
+
+// 게시판 페이지로 이동하는 함수
+// 로그인 상태를 확인하고 로그인되어 있지 않다면 경고 창을 표시
+const goArticles = function () {
+  if (store.token) {
+    router.push({ name: 'articles' })
+  } else {
+    if (confirm('로그인 사용자만 이용할 수 있습니다. 로그인하겠습니까?')) {
+      goLogin()
+    }
+  }
+}
 </script>
 
 <template>
@@ -72,7 +82,7 @@ const goProfile = function () {
               <RouterLink :to="{ name: 'SuggestionView' }" class="nav-link active">상품 추천</RouterLink>
             </li>
             <li class="nav-item">
-                <RouterLink :to="{ name: 'articles' }" class="nav-link active">게시판</RouterLink>
+              <a @click="goArticles" class="nav-link active" style="cursor: pointer;">게시판</a>
             </li>
           </ul>
           <!-- 로그인 상태에 따른 버튼 표시 -->

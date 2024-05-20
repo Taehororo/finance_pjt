@@ -17,7 +17,7 @@ import SignUpView from '@/views/users/SignUpView.vue'
 import ProfileView from '@/views/users/ProfileView.vue'
 
 // 게시판
-import ArticlesView from '@/views/ArticlesView.vue'
+import ArticlesView from '@/views/articles/ArticlesView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
