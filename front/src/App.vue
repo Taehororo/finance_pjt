@@ -46,6 +46,13 @@ const goSignup = function () {
       </div>
     </div>
   </nav>
+
+  <!-- 삭제해라 -->
+  <p>나중에 삭제할것</p>
+  <a href="http://127.0.0.1:8000/deposit/api">예금 db 생성</a>
+  <span>|</span>
+  <a href="http://127.0.0.1:8000/saving/api">적금 db 생성</a>
+  <!-- 삭제해라 -->
 </div>
   <RouterView />
 
