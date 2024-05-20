@@ -21,6 +21,9 @@ export const useFinanceStore = defineStore('finance', () => {
   // django에서 authorization header를 위한 토큰
   const token = ref(null)
 
+  // 현재 게시글 작성 페이진지 아닌지 확인용 변수
+  const write = ref(true)
+
   // 로그인한 상태냐 아니냐를 위한 함수
   const isLogin = computed(() => {
     if (token.value === null) {
@@ -155,5 +158,5 @@ export const useFinanceStore = defineStore('finance', () => {
   }  
 
 
-  return { API_URL, getDeposits, getFreeSaving, getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp, userInfo, userId }
+  return { API_URL, getDeposits, getFreeSaving, getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp, userInfo, userId, write}
 },{ persist: true })
