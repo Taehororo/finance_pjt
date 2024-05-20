@@ -27,6 +27,8 @@ const goSignup = function () {
 const goLogout = function () {
   isScreenBlinking.value = true
   store.token = null
+  store.userInfo = null
+  store.userId = null
   setTimeout(() => {
     router.replace({ name: 'MainPageView' })
     isScreenBlinking.value = false

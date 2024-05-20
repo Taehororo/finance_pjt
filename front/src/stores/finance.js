@@ -156,4 +156,4 @@ export const useFinanceStore = defineStore('finance', () => {
 
 
   return { API_URL, getDeposits, getFreeSaving, getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp, userInfo, userId }
-})
+},{ persist: true })

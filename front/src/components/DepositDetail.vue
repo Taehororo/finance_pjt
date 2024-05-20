@@ -34,8 +34,10 @@
 import { defineProps, onMounted, ref } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
 import axios from 'axios'
+import { routeLocationKey,useRoute, useRouter } from 'vue-router';
 // 찜하기가 나올지 찜취소가 나올지 설정
-
+const route = useRoute()
+const router = useRouter()
 const liked = ref(false)
 const store = useFinanceStore()
 const props = defineProps({
@@ -93,6 +95,25 @@ const checkLiked = function () {
   }).catch((error) => {
     console.log(error)
   })
+
+  axios({
+    method: 'get',
+    url: `${store.API_URL}/accounts/user/`,
+    headers: {
+      Authorization: `Token ${store.token}`
+    }
+  }).then((response) => {
+    console.log(response.data)
+    store.userInfo = response.data
+  }).catch((error) => {
+    console.log(error)
+  })
+  if (route.name === 'Profile') {
+    console.log(route.params.userid)
+    router.go(0)
+    // router.replace({ name: 'Profile',params:{userid: route.params.userid }})
+  }
+  
 } 
 
 </script>
