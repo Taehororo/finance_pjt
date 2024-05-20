@@ -165,3 +165,43 @@
 >    "message": "해당 자유적금 상품이 찜한 목록에 추가되었습니다.",
 >    "liked": true
 >  }
+>
+### 각 상품들 찜한 여부 조회
+> ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
+> 예금상품 찜여부 조회 <br>
+> http://127.0.0.1:8000/deposit/like/check/<<int:product_id>>/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+> 
+> | **Response**  |  |
+> | --- | --- |
+> {
+>    "liked": true
+> }
+
+> ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
+> 정기적금상품 찜여부 조회 <br>
+> http://127.0.0.1:8000/saving/like_fixed/check/<<int:product_id>>/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+>
+> | **Response**  |  |
+> | --- | --- |
+> {
+>    "liked": true
+>  }
+
+> ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
+> 자유적금상품 찜여부 조회 <br>
+> http://127.0.0.1:8000/saving/like_free/check/<<int:product_id>>/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |  
+>
+>  | **Response**  |  |
+> | --- | --- |
+> {
+>    "liked": true
+> }

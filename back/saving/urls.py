@@ -8,4 +8,6 @@ urlpatterns = [
     path('free/products/', views.free_product_list),
     path('like_fixed/<int:product_id>/', views.like_fixed_saving_product),
     path('like_free/<int:product_id>/', views.like_free_saving_product),
+    path('like_fixed/check/<int:product_id>/', views.check_like_fixed_saving_product),
+    path('like_free/check/<int:product_id>/', views.check_like_free_saving_product),
 ]

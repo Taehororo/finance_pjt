@@ -247,3 +247,23 @@ def like_free_saving_product(request, product_id):
         message = '해당 자유적금 상품이 찜한 목록에 추가되었습니다.'
     
     return Response({'message': message, 'liked': liked}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_like_fixed_saving_product(request, product_id):
+    user = request.user
+    product = get_object_or_404(FixedSavingProductsBaseInfo, base_product_id=product_id)
+    # serializer = FixedSavingProductsBaseInfoSerializer(product)
+    liked = product in user.liked_fixed_saving_products.all()
+    return Response({'liked': liked}, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_like_free_saving_product(request, product_id):
+    user = request.user
+    product = get_object_or_404(FreeSavingProductsBaseInfo, base_product_id=product_id)
+    # serializer = FreeSavingProductsBaseInfoSerializer(product)
+    liked = product in user.liked_free_saving_products.all()
+    return Response({'liked': liked}, status=status.HTTP_200_OK)
