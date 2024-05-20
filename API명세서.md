@@ -77,6 +77,10 @@
 > | **outputcountry** | 한국 원 |
 > | **money** | 10 |
 
+<br>
+<hr>
+<br>
+
  > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
 > 회원가입 요청<br>
 > http://127.0.0.1:8000/accounts/signup/ <br>
@@ -88,5 +92,27 @@
 > | **jibun_address** | 지번주소 |
 > | **detail_address** | 상세주소 |
 > | **username** | 아이디 |
+> | **email** | 이메일 |
 > | **password1** | 비밀번호 |
 > | **password2** | 비밀번호 확인 |
+
+ > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
+> 로그인 요청<br>
+> http://127.0.0.1:8000/accounts/login/ <br>
+> | **Body** &nbsp; <sub>form-data</sub>  |  |
+> | --- | --- |
+> | **username** | 아이디 |
+> | **password** | 비밀번호 |
+>
+> | **Response**  |  |
+> | --- | --- |
+> {
+>    "key": "토큰"
+> }
+
+> ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
+> 유저정보 조회 <br>
+> http://127.0.0.1:8000/accounts/user/
+> | **Request Header**  |  |
+> | --- | --- |
+> | **Authorization** | Token 토큰 |

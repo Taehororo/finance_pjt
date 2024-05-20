@@ -96,11 +96,14 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-# Ensure the following setting is in your settings.py
-REST_AUTH_REGISTER_SERIALIZERS = {
+# # Ensure the following setting is in your settings.py
+# REST_AUTH_REGISTER_SERIALIZERS = {
+#     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+# }
+REST_AUTH = {
     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
 }
-
 
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5173',
