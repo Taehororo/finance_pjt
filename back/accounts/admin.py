@@ -6,7 +6,7 @@ from .models import User
 class CustomUserAdmin(UserAdmin):
     model = User
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('name', 'postcode', 'road_address', 'jibun_address', 'detail_address')}),
+        (None, {'fields': ('name', 'postcode', 'roadaddress', 'jibunaddress', 'detailaddress')}),
     )
 
 admin.site.register(User, CustomUserAdmin)
