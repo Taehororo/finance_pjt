@@ -29,7 +29,7 @@ environ.Env.read_env(
 # 각 API 키를 개별적으로 불러옴
 DEPOSIT_SAVING_API_KEY = env('DEPOSIT_SAVING_API_KEY')
 EXCHANGE_API_KEY = env('EXCHANGE_API_KEY')
-
+CHATGPT_API_KEY = env('CHATGPT_API_KEY')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'saving',
     'exchange',
     'articles',
+    'recommender',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',

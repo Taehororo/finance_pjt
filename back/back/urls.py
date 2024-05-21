@@ -24,4 +24,5 @@ urlpatterns = [
     path('exchange/', include('exchange.urls')),
     path('accounts/', include('accounts.urls')),
     path('articles/', include('articles.urls')),
+    path('recommender/', include('recommender.urls'))
 ]
