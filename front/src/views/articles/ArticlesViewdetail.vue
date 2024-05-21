@@ -1,6 +1,7 @@
 <template>
-		<p>상세페이지</p>
+		
     <div>
+			<p>상세페이지</p>
 			<p>작성자 : {{ article.author }}</p>
 			<p>제목 : {{ article.title }}</p>
 			<p>내용 : {{ article.content }}</p>
@@ -13,11 +14,22 @@
 				수정하기</RouterLink> -->
 			<button type="button" class="btn btn-primary ml-2" v-if="article.author === store.userInfo['username']" @click="deleteArticle">삭제하기</button>
 			<button type="button" class="btn btn-primary ml-2" @click="goBack">뒤로가기</button>
+			<CommentsAll :articleId="articleId"/>
+			<!-- <hr>
+			<p>댓글</p>
+			<button type="button" class="btn btn-primary ml-2" v-if="article.author !== store.userInfo['username']" @click="goComment">댓글달기</button>
+			<div v-for="comment in article.comments">
+				<p>댓글 : {{ comment }}</p>
+			</div> -->
+			<!-- <RouterLink :to="{ name: 'comment', params: { articleid: articleId.value } }">댓글목록</RouterLink>
+			<RouterView />
+			 -->
+			
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { useFinanceStore } from '@/stores/finance'
@@ -25,14 +37,20 @@ const store = useFinanceStore()
 const route = useRoute()
 const router = useRouter()
 
+import CommentsAll from '@/components/comments/CommentsAll.vue'
+
+
+
 // 현재 페이지의 아티클번호
 const articleId = ref(route.params.articleid)
+
+
 
 // 장고에서 페이지의 아티클 번호로 해당하는 아티클의 세부정보 받아오기
 const article = ref({})
 axios({
   method: 'get',
-  url: `${store.API_URL}/articles/${articleId.value}/`
+  url: `${store.API_URL}/articles/articles/${articleId.value}/`
 }).then((response) => {
 	article.value = response.data
 }).catch((error) => {
@@ -54,7 +72,7 @@ const goUpdate = function () {
 const deleteArticle = function () {
 	axios({
   method: 'delete',
-  url: `${store.API_URL}/articles/${articleId.value}/`,
+  url: `${store.API_URL}/articles/articles/${articleId.value}/`,
 	headers: {
       Authorization: `Token ${store.token}`
   }
@@ -64,6 +82,14 @@ const deleteArticle = function () {
 		console.log(error)
 	})
 }
+
+// 댓글 달기
+const goComment = function () {
+	router.push({ name: 'commentcreate' })
+}
+
+
+
 </script>
 
 <style scoped>

@@ -23,6 +23,8 @@ import ArticlesViewDetail from '@/views/articles/ArticlesViewDetail.vue'
 import ArticlesViewUpdate from '@/views/articles/ArticlesViewUpdate.vue'
 import ArticlesViewAll from '@/views/articles/ArticlesViewAll.vue'
 
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -84,10 +86,11 @@ const router = createRouter({
         {path: 'all', name: 'articleall', component: ArticlesViewAll },
         {path: 'create', name: 'articlecreate', component: ArticlesViewCreate },
         //  variable routing 필요 path 수정필요
-        {path: 'detail/:articleid', name: 'articledetail', component: ArticlesViewDetail },
+        { path: 'detail/:articleid', name: 'articledetail', component: ArticlesViewDetail },
         {path: 'update/:articleid', name: 'articleupdate', component: ArticlesViewUpdate },
       ]
     }
+
     
   ]
 })

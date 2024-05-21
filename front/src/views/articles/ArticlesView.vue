@@ -19,6 +19,7 @@ import { useFinanceStore } from '@/stores/finance'
 const store = useFinanceStore()
 
 
+
 router.push({ name: 'articleall'})
 store.write = true
 

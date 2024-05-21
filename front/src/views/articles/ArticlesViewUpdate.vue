@@ -44,7 +44,7 @@ const article = reactive({
 
 const fetchArticle = async () => {
   try {
-    const response = await axios.get(`${store.API_URL}/articles/${articleId.value}/`);
+    const response = await axios.get(`${store.API_URL}/articles/articles/${articleId.value}/`);
     article.title = response.data.title;
     article.content = response.data.content;
   } catch (error) {
@@ -57,7 +57,7 @@ onMounted(fetchArticle);
 const updateArticle = () => {
   axios({
     method: 'put',
-    url: `${store.API_URL}/articles/${articleId.value}/`,
+    url: `${store.API_URL}/articles/articles/${articleId.value}/`,
     headers: {
       Authorization: `Token ${store.token}`
     },

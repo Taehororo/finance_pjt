@@ -4,7 +4,7 @@
         <div v-for="article in allArticles">
 					<p>작성자: {{ article.author }}</p>
 					<p>제목: {{ article.title }}</p>
-					<p>내용 :{{ article.content }}</p>
+					<p>내용 : {{ article.content }}</p>
 					<RouterLink :to="{ name: 'articledetail', params: { 'articleid': article.id} }">상세보기</RouterLink>
 					<hr>
         </div>
@@ -21,7 +21,7 @@ const store = useFinanceStore()
 const allArticles = ref([])
 axios({
   method: 'get',
-  url: `${store.API_URL}/articles/`
+  url: `${store.API_URL}/articles/articles/`
 }).then((response) => {
 	allArticles.value = response.data
   console.log(response)
