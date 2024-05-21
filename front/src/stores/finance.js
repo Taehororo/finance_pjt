@@ -4,7 +4,23 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 
+const getDB = ref(true)
 export const useFinanceStore = defineStore('finance', () => {
+
+  // 서버 처음 시작될때 예적금 데이터 가져오기 위하여 설정
+  if (getDB) {
+    axios({
+      method: 'get',
+      url: 'http://127.0.0.1:8000/deposit/api'
+    })
+    axios({
+      method: 'get',
+      url: 'http://127.0.0.1:8000/saving/api'
+    })
+    getDB.value = false
+  } 
+
+
   const API_URL = 'http://127.0.0.1:8000'
   // 예금을 위한 배열
   const finances = ref([])
@@ -58,7 +74,11 @@ export const useFinanceStore = defineStore('finance', () => {
        logIn({ username, password })
      })
      .catch((error) => {
-       console.log(error)
+      if (error.response.status === 400) {
+         // 사용자 데이터에 없는 경우 처리
+         // 여기에서 모달 창을 띄우거나 적절한 메시지를 화면에 표시할 수 있습니다.
+        alert("회원가입 실패 다시 시도해주세요.")
+      }
      })
   }
   // 로그인 로직
@@ -97,6 +117,11 @@ export const useFinanceStore = defineStore('finance', () => {
       })
       .catch((error) => {
         console.log(error)
+        if (error.response.status === 400) {
+          // 사용자 데이터에 없는 경우 처리
+          // 여기에서 모달 창을 띄우거나 적절한 메시지를 화면에 표시할 수 있습니다.
+          alert("회원가입되지 않은 사용자입니다.")
+        }
       })
   }
 

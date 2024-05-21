@@ -3,6 +3,9 @@ import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import { useFinanceStore } from './stores/finance'
 import { ref } from 'vue'
 
+
+
+
 // 상태 관리와 라우터 관련 설정
 const store = useFinanceStore()
 const router = useRouter()
