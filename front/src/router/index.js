@@ -19,7 +19,7 @@ import ProfileView from '@/views/users/ProfileView.vue'
 // 게시판
 import ArticlesView from '@/views/articles/ArticlesView.vue'
 import ArticlesViewCreate from '@/views/articles/ArticlesViewCreate.vue'
-import ArticlesViewDetail from '@/views/articles/ArticlesViewDetail.vue'
+import ArticlesViewDetail from '@/views/articles/ArticlesViewdetail.vue'
 import ArticlesViewUpdate from '@/views/articles/ArticlesViewUpdate.vue'
 import ArticlesViewAll from '@/views/articles/ArticlesViewAll.vue'
 
