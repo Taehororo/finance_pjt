@@ -10,7 +10,9 @@
       <div class="chat-message">
         <div class="chat-bubble">
           <p>ChatGPT: {{ responseData }}</p>
+        
         </div>
+        
       </div>
     </div>
 
@@ -40,31 +42,61 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
+import { useFinanceStore } from '@/stores/finance'
+import DepostiDetail from '@/components/DepositDetail.vue'
 
+const store = useFinanceStore()
 // 초기 데이터
 const productType = ref('예금') // 초기값은 '예금'
 const userQuestion = ref('')
 const responseData = ref('')
 
+// chatgpt가 추천해준 상품들의 product_id 를 저장할 배열
+const recommendArr = ref([])
+// chatgpt가 추천해준 상품의 종류 deposit,
+const kind = ref('')
+// chat gpt가 추천해준 상품들의 product_id를 통해 db에서 해당하는 상품을 찾아
+// 배열 형태로 저장
+const recommendFinances = ref([])
 // 입력 제출
 const submitQuestion = () => {
   sendDataToBackend()
 }
 
+
 // 백엔드로 데이터 전송
 const sendDataToBackend = async () => {
   try {
-    const response = await axios.post('/api/chatgpt', {
-      productType: productType.value,
-      userQuestion: userQuestion.value
+    const producttype = ref(productType.value)
+    if (producttype.value === '예금') {
+      producttype.value = 'deposit'
+    } else if (producttype.value === '정기적금') {
+      producttype.value = 'fixedsaving'
+    } else {
+      producttype.value = 'freesaving'
+    }
+    const response = await axios({
+      method: 'post',
+      url: `${store.API_URL}/recommender/chatbot/`,
+      data: {
+        message: userQuestion.value,
+        producttype: producttype.value
+      }
     })
-    responseData.value = response.data.answer
+
+    responseData.value = response.data.message
+    recommendArr.value = response.data.product
     // 입력창 초기화
     userQuestion.value = ''
+    console.log(recommendArrId.value)
+    for (let recommend of recommendArr.value) {
+      console.log(recommend)
+    }
   } catch (error) {
     console.error('Error sending data to backend:', error)
   }
 }
+
 
 // 상품 유형 선택 함수
 const selectProductType = (type) => {

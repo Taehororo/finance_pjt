@@ -5,7 +5,7 @@ import axios from 'axios'
 
 
 const getDB = ref(true)
-const getDB2 = ref(true)
+
 export const useFinanceStore = defineStore('finance', () => {
 
   // 서버 처음 시작될때 예적금 데이터 가져오기 위하여 설정
@@ -17,15 +17,21 @@ export const useFinanceStore = defineStore('finance', () => {
     getDB.value = false
   } 
 
-  if (getDB) {
-    axios({
-      method: 'get',
-      url: 'http://127.0.0.1:8000/saving/api'
-    })
+
+
+  const getDB2 = ref(true)
+
+
+  const dbSaving = function () {
+    if (getDB2.value) {
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/saving/api'
+      })
     getDB2.value = false
+    }
+   
   }
-
-
 
   const API_URL = 'http://127.0.0.1:8000'
   // 예금을 위한 배열
@@ -189,5 +195,5 @@ export const useFinanceStore = defineStore('finance', () => {
   }  
 
 
-  return { API_URL, getDeposits, getFreeSaving, getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp, userInfo, userId, write}
+  return { API_URL, getDeposits, getFreeSaving, getFixedSaving, finances, finances2, finances3, changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp, userInfo, userId, write, getDB2, dbSaving }
 },{ persist: true })

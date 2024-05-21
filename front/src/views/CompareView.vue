@@ -111,13 +111,17 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import { useFinanceStore } from '@/stores/finance'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 const store = useFinanceStore()
 store.getDeposits()
 store.getFixedSaving()
 store.getFreeSaving()
+
+onMounted(() => {
+  store.dbSaving()
+})
 
 // 예치기간을 위한 변수
 const selectedText = ref('12개월')
