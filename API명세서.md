@@ -289,13 +289,13 @@
 <hr>
 
 > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
-> 게시글 상세 조회<br>
+> 댓글 상세 조회<br>
 > */articles/comments/{id}/*
 
 
 
 >![](https://img.shields.io/static/v1?label=&message=PUT&color=blue)<br>
-> 게시글 전체필드 수정<br>
+> 댓글 전체필드 수정<br>
 > */articles/comments/{id}/*
 > | **Request Header**  |  |
 > | --- | --- |
@@ -307,7 +307,7 @@
 > | **content** | 댓글 내용 수정합니다 |
 
 >![](https://img.shields.io/static/v1?label=&message=PATCH&color=purple)<br>
-> 게시글 일부분 필드 수정<br>
+> 댓글 일부분 필드 수정<br>
 > */articles/comments/{id}/*
 > | **Request Header**  |  |
 > | --- | --- |
@@ -319,8 +319,18 @@
 > | **content** | 댓글 내용 수정합니다 |
 
 >![](https://img.shields.io/static/v1?label=&message=DELETE&color=red)<br>
-> 게시글 삭제<br>
+> 댓글 삭제<br>
 > */articles/comments/{id}/*
 > | **Request Header**  |  |
 > | --- | --- |
 > | **Authorization** | Token 토큰값 |  
+>
+
+### 챗봇에 질문하기
+> ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
+> gpt에 질문 <br>
+> **/recommender/chatbot/**
+> | **Body** &nbsp; <sub>form-data</sub>  |  |
+> | --- | --- |
+> | **message** | 1 |
+> | **productype** | freesaving |
