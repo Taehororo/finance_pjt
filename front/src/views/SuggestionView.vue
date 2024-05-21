@@ -17,16 +17,13 @@
     <!-- 상품 유형 선택 -->
     <div class="radio-container">
       <label>상품 유형:</label>
-      <div>
-        <input type="radio" id="deposit" value="예금" v-model="productType" @change="sendDataToBackend">
+      <div class="radio-option" :class="{ 'selected': productType === '예금' }" @click="selectProductType('예금')">
         <label for="deposit">예금</label>
       </div>
-      <div>
-        <input type="radio" id="investment" value="장기적금" v-model="productType" @change="sendDataToBackend">
-        <label for="investment">장기적금</label>
+      <div class="radio-option" :class="{ 'selected': productType === '정기적금' }" @click="selectProductType('정기적금')">
+        <label for="regularInvestment">정기적금</label>
       </div>
-      <div>
-        <input type="radio" id="savings" value="자유적금" v-model="productType" @change="sendDataToBackend">
+      <div class="radio-option" :class="{ 'selected': productType === '자유적금' }" @click="selectProductType('자유적금')">
         <label for="savings">자유적금</label>
       </div>
     </div>
@@ -68,6 +65,11 @@ const sendDataToBackend = async () => {
     console.error('Error sending data to backend:', error)
   }
 }
+
+// 상품 유형 선택 함수
+const selectProductType = (type) => {
+  productType.value = type
+}
 </script>
 
 <style scoped>
@@ -104,6 +106,20 @@ const sendDataToBackend = async () => {
 
 .radio-container label {
   margin-right: 10px;
+}
+
+.radio-option {
+  display: inline-block;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.radio-option.selected label {
+  color: #007bff;
+}
+
+.radio-option:hover label {
+  cursor: pointer;
 }
 
 .question-container {
