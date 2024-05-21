@@ -3,9 +3,6 @@ import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import { useFinanceStore } from './stores/finance'
 import { ref } from 'vue'
 
-
-
-
 // 상태 관리와 라우터 관련 설정
 const store = useFinanceStore()
 const router = useRouter()
@@ -104,13 +101,8 @@ const goArticles = function () {
         </div>
       </div>
     </nav>
-
-    <!-- 임시 링크들 (나중에 삭제할 것) -->
-    <p>나중에 삭제할것</p>
-    <a href="http://127.0.0.1:8000/deposit/api">예금 db 생성</a>
-    <span>|</span>
-    <a href="http://127.0.0.1:8000/saving/api">적금 db 생성</a>
   </div>
+
   <!-- 화면 깜빡임 효과를 적용할 RouterView -->
   <RouterView :class="{ 'screen-blink': isScreenBlinking }" />
 </template>

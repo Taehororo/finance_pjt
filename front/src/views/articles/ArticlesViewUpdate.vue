@@ -55,7 +55,7 @@ const updateArticle = () => {
     .then(response => {
       console.log(response)
       store.write = true
-      router.replace({ name: 'articleall' })
+      router.replace({ name: 'articledetail', params: { articleid: articleId.value } })
     })
     .catch(error => {
       console.error(error)

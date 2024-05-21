@@ -38,6 +38,10 @@ const createComment = () => {
     emit('comment-added')
   }).catch((error) => {
     console.log(error)
+    if (error.response.status === 400) {
+      // 댓글에 아무것도 안적은경우
+      alert("공백은 쓸수없습니다.")
+    }
   })
 }
 </script>
