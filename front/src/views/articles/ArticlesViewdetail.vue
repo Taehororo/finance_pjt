@@ -1,97 +1,75 @@
 <template>
-		
-    <div>
-			<p>상세페이지</p>
-			<p>작성자 : {{ article.author }}</p>
-			<p>제목 : {{ article.title }}</p>
-			<p>내용 : {{ article.content }}</p>
-			<button type="button" class="btn btn-primary ml-2" v-if="article.author === store.userInfo['username']" @click="goUpdate">수정하기</button>
-			<!-- <RouterLink 
-			:to="{name: 'articleupdate', params: {'articleid': articleId}}" 
-			v-if="article.author === store.userInfo['username']"
-			:article="article"
-			>
-				수정하기</RouterLink> -->
-			<button type="button" class="btn btn-primary ml-2" v-if="article.author === store.userInfo['username']" @click="deleteArticle">삭제하기</button>
-			<button type="button" class="btn btn-primary ml-2" @click="goBack">뒤로가기</button>
-			<CommentsAll :articleId="articleId"/>
-			<!-- <hr>
-			<p>댓글</p>
-			<button type="button" class="btn btn-primary ml-2" v-if="article.author !== store.userInfo['username']" @click="goComment">댓글달기</button>
-			<div v-for="comment in article.comments">
-				<p>댓글 : {{ comment }}</p>
-			</div> -->
-			<!-- <RouterLink :to="{ name: 'comment', params: { articleid: articleId.value } }">댓글목록</RouterLink>
-			<RouterView />
-			 -->
-			
-    </div>
+	<div class="container mt-5">
+		<h3 class="fw-bold">상세페이지</h3>
+		<div class="card mb-3">
+			<div class="card-body">
+				<h5 class="card-title">{{ article.title }}</h5>
+				<h6 class="card-subtitle mb-2 text-muted">작성자: {{ article.author }}</h6>
+				<p class="card-text">{{ article.content }}</p>
+				<div class="btn-group" v-if="article.author === store.userInfo.username">
+					<button type="button" class="btn btn-primary" @click="goUpdate">수정하기</button>
+					<button type="button" class="btn btn-danger" @click="deleteArticle">삭제하기</button>
+					<button type="button" class="btn btn-secondary" @click="goBack">뒤로가기</button>
+				</div>
+				<div v-else>
+					<button type="button" class="btn btn-secondary" @click="goBack">뒤로가기</button>
+				</div>
+
+			</div>
+		</div>
+		<CommentsAll :articleId="articleId" />
+	</div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { useFinanceStore } from '@/stores/finance'
+import CommentsAll from '@/components/comments/CommentsAll.vue'
+
 const store = useFinanceStore()
 const route = useRoute()
 const router = useRouter()
-
-import CommentsAll from '@/components/comments/CommentsAll.vue'
-
-
-
-// 현재 페이지의 아티클번호
 const articleId = ref(route.params.articleid)
-
-
-
-// 장고에서 페이지의 아티클 번호로 해당하는 아티클의 세부정보 받아오기
 const article = ref({})
-axios({
-  method: 'get',
-  url: `${store.API_URL}/articles/articles/${articleId.value}/`
-}).then((response) => {
-	article.value = response.data
-}).catch((error) => {
-  console.log(error)
-})
 
-// 전체게시글로 돌아가기
-const goBack = function () {
+const fetchArticle = () => {
+	axios.get(`${store.API_URL}/articles/articles/${articleId.value}/`)
+		.then(response => {
+			article.value = response.data
+		})
+		.catch(error => {
+			console.error(error)
+		})
+}
+
+fetchArticle()
+
+const goBack = () => {
 	store.write = true
-	router.replace({ name: 'articleall'})
+	router.replace({ name: 'articleall' })
 }
 
-// 게시글 업데이트하러가기
-const goUpdate = function () {
-	router.push({name: 'articleupdate', params: {'articleid': articleId.value}})
+const goUpdate = () => {
+	router.push({ name: 'articleupdate', params: { articleid: articleId.value } })
 }
 
-// 게시글 삭제
-const deleteArticle = function () {
-	axios({
-  method: 'delete',
-  url: `${store.API_URL}/articles/articles/${articleId.value}/`,
-	headers: {
-      Authorization: `Token ${store.token}`
-  }
-	}).then((response) => {
-		router.replace({name: 'articleall'})
-	}).catch((error) => {
-		console.log(error)
+const deleteArticle = () => {
+	axios.delete(`${store.API_URL}/articles/articles/${articleId.value}/`, {
+		headers: { Authorization: `Token ${store.token}` }
 	})
+		.then(response => {
+			router.replace({ name: 'articleall' })
+		})
+		.catch(error => {
+			console.error(error)
+		})
 }
-
-// 댓글 달기
-const goComment = function () {
-	router.push({ name: 'commentcreate' })
-}
-
-
-
 </script>
 
 <style scoped>
-
+.container {
+	max-width: 800px;
+}
 </style>

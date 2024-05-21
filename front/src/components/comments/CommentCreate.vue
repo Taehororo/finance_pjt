@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="comment-create mb-3">
     <form @submit.prevent="createComment">
       <div class="mb-3">
         <label for="content" class="form-label">내용</label>
-        <input id="content" class="form-control" rows="5" v-model="content">
+        <textarea id="content" class="form-control" rows="3" v-model="content"></textarea>
       </div>
       <button type="submit" class="btn btn-primary">저장</button>
     </form>
@@ -43,7 +43,8 @@ const createComment = () => {
 </script>
 
 <style scoped>
-.container {
+.comment-create {
   max-width: 600px;
+  margin: 0 auto;
 }
 </style>

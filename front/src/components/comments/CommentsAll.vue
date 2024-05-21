@@ -1,14 +1,17 @@
 <template>
-  <div>
+  <div class="comments-section mt-4">
     <hr>
-    <p>댓글</p>
+    <h5>댓글</h5>
     <CommentCreate @comment-added="fetchComments" />
-    <div v-for="comment in comments" :key="comment.id">
-      <p>작성자: {{ comment.author }}</p>
-      <p>내용: {{ comment.content }}</p>
-      <button type="button" class="btn btn-primary ml-2" v-if="comment.author === store.userInfo['username']"
-        @click="deleteComment(comment.id)">삭제하기</button>
-      <hr>
+    <div class="comment-list mt-3">
+      <div v-for="comment in comments" :key="comment.id" class="card mb-3">
+        <div class="card-body">
+          <h6 class="card-title">작성자: {{ comment.author }}</h6>
+          <p class="card-text">{{ comment.content }}</p>
+          <button type="button" class="btn btn-danger btn-sm" v-if="comment.author === store.userInfo['username']"
+            @click="deleteComment(comment.id)">삭제하기</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,4 +57,13 @@ const deleteComment = (commentId) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.comments-section {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.comment-list .card {
+  background-color: #f8f9fa;
+}
+</style>
