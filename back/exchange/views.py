@@ -37,6 +37,7 @@ def fetch_exchange_rates(search_date):
         return None, None
     
 
+# 가장 가까운 날의 데이터를 fetch하고, 미국달러와 한국원의 일주일간의 데이터 return
 @api_view(['GET'])
 def get_exchange_rates(request):
     global EXCHANGE_DATA, EXCHANGE_DATE
@@ -48,7 +49,9 @@ def get_exchange_rates(request):
     EXCHANGE_DATA = exchange_data
     EXCHANGE_DATE = exchange_date
 
-    return Response({'message': 'Exchange rates fetched successfully'}, status=status.HTTP_200_OK)
+    first_country_dates, first_country_rates, second_country_dates, second_country_rates = fetch_dates_and_rates_for_period('미국 달러', '한국 원')
+
+    return Response({'input_country': {'dates': first_country_dates, 'rates': first_country_rates}, 'output_country': {'dates': second_country_dates, 'rates': second_country_rates}}, status=status.HTTP_200_OK)
 
 
 # 두개 국가의 일주일 간 dates과 rates 배열을 반환 하는 함수
