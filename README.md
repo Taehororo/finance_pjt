@@ -29,7 +29,6 @@ $ npm run dev
 ```
 finance_pjt/back
 
-$ python manage.py makemigrations
 $ python manage.py migrate
 $ python manage.py loaddata fixtures/deposit_data.json
 $ python manage.py loaddata fixtures/saving_data.json  
@@ -38,7 +37,6 @@ $ python manage.py loaddata fixtures/saving_data.json
 ```
 finance_pjt/back
 
-$ python manage.py makemigrations
 $ python manage.py migrate
 ```
  
