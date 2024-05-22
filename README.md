@@ -49,5 +49,42 @@ $ python manage.py migrate
 > http://127.0.0.1:8000/saving/api
 >
 > 
+## 설계 내용
+### 메인 기능 
+1. 예금 & 적금 금리비교 사이트
+2. 환율변환
+3. 근처은행
+4. chatGPT를 이용한 상품 추천
+5. 게시판
+### 사용한 기술
+- Django
+- Vue3
+- Pinia (state관리 라이브러리)
+- chart.js, vue-chartjs (vue에서 그래프출력)
+- dj-rest-auth (django 로그인 회원가입관련 라이브러리)
+### 사용한 API
+- KaKaoMap API (근처은행검색에 사용)
+- 다음카카오 우편번호 API (회원가입시 주소검색에 사용)
+- 한국수출입은행 환율정보 API (환율변환에 사용)
+- 금융감독원 API (예/적금 금리비교에 사용)
+- chatGPT API (금융상품추천에 사용)
+## [데이터베이스 모델링(ERD)](https://github.com/Taehororo/finance_pjt/blob/master/E-R%20diagram.md)
 
 
+## 금융 상품 추천 
+
+
+## 서비스 대표 기능들
+### 1. 예/적금 금리비교
+
+### 2. 환율변환
+
+### 3. 근처은행
+
+### 4. 상품 추천
+
+### 5. 게시판
+
+
+
+## 후기

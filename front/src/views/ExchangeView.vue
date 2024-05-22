@@ -2,7 +2,7 @@
   <div class="bg-info-subtle d-flex align-items-center justify-content-center container" style="height: 100px;">
     <h2 class="fw-bold">환율변환</h2>
   </div>
-
+  <createChart />
   <div class="container mt-5 d-flex flex-column align-items-center">
     <div class="mb-3">
       <label for="fromCurrency" class="form-label text-info fw-bold">입력 통화를 선택하세요:</label>
@@ -28,9 +28,14 @@
       <h2 class="fs-1 fw-bold mt-0">{{ changeAmount }} {{ toCurrency }}</h2>
     </div>
   </div>
+  
 </template>
 
 <script setup>
+// chart.js 써볼까?
+import createChart from '@/components/createChart.vue'
+
+
 import { ref, watch, onMounted } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
 const store = useFinanceStore()
