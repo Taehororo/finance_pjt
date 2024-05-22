@@ -1,6 +1,8 @@
 from django.conf import settings
 from deposit.models import DepositProductsBaseInfo
 from saving.models import FixedSavingProductsBaseInfo, FreeSavingProductsBaseInfo
+from deposit.serializers import DepositProductsBaseInfoSerializer
+from saving.serializers import FixedSavingProductsBaseInfoSerializer, FreeSavingProductsBaseInfoSerializer
 import requests, json, pprint
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -206,26 +208,34 @@ def chatbot(request):
     if request.method == 'POST':    
         try:
             data = request.data
+            # 예시
             # user_message = "저는 1년동안 최대 이익을 얻고싶어요."
-            # product_type = "fixed_saving"
+            # product_type = "fixedsaving"
             user_message = data.get('message', '')  # 사용자의 질문
             product_type = data.get('producttype', '') # 사용자가 선택한 상품 유형
             if not user_message or not product_type:    # 질문이나 상품이 없다면
                 return Response({"error": "Invalid input"}, status=status.HTTP_400_BAD_REQUEST)
             
-            if product_type == 'deposit':   # 예금
-                gpt_message, extract_product = recommend_product(user_message, product_type)
-            elif product_type == 'fixedsaving':    # 정기 적금
-                gpt_message, extract_product = recommend_product(user_message, product_type)
-            elif product_type == 'freesaving':     # 자유 적금
-                gpt_message, extract_product = recommend_product(user_message, product_type)
-            else:
-                return Response({"error": "Invalid product type"}, status=status.HTTP_400_BAD_REQUEST)
-            
-            if gpt_message:
-                return Response({"message": gpt_message, "product": extract_product}, status=status.HTTP_200_OK)
-            else:
+            gpt_message, extract_product = recommend_product(user_message, product_type)    # GPT에서 만들어준 답변, {상품아이디, 상품유형}을 추출
+            if not gpt_message: # GPT에서 만들어준 답변이 없으면
                 return Response({"error": "Failed to get a valid response from the API"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            # extract_product를 기반으로 실제 상품 정보를 가져와 시리얼라이저를 사용해 직렬화
+            product_data = []
+            for item in extract_product:
+                if item['product_type'] == 'deposit':
+                    product_instance = DepositProductsBaseInfo.objects.get(base_product_id=item['base_product_id'])
+                    serializer = DepositProductsBaseInfoSerializer(product_instance)
+                elif item['product_type'] == 'fixedsaving':
+                    product_instance = FixedSavingProductsBaseInfo.objects.get(base_product_id=item['base_product_id'])
+                    serializer = FixedSavingProductsBaseInfoSerializer(product_instance)
+                elif item['product_type'] == 'freesaving':
+                    product_instance = FreeSavingProductsBaseInfo.objects.get(base_product_id=item['base_product_id'])
+                    serializer = FreeSavingProductsBaseInfoSerializer(product_instance)
+                
+                product_data.append(serializer.data)
+
+            return Response({"message": gpt_message, "product": product_data}, status=status.HTTP_200_OK)
 
         except json.JSONDecodeError:
             return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
