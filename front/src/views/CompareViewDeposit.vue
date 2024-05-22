@@ -45,7 +45,6 @@ import { ref, defineProps } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
 import DepostiDetail from '@/components/DepositDetail.vue'
 const store = useFinanceStore()
-
 const highlightedID = ref(null)
 const finance = ref(null)
 

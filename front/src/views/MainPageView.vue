@@ -60,9 +60,6 @@ const goSuggestion = () => {
   router.push({ name: 'SuggestionView' })
 }
 
-// 서버 실행시 db 저장을 위한 함수 
-store.dbSaving()
-
 </script>
 
 <style scoped>

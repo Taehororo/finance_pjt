@@ -3,56 +3,9 @@ import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const getDB = ref(true)
-const getDB2 = ref(true)
+
 
 export const useFinanceStore = defineStore('finance', () => {
-
-  // 서버 처음 시작될 때 예적금 데이터 가져오기 위하여 설정
-  const initializeData = async () => {
-    try {
-      if (getDB.value === true) {
-        await axios({
-          method: 'get',
-          url: 'http://127.0.0.1:8000/deposit/api'
-        })
-        console.log('예금DB저장완료')
-        getDB.value = false
-      }
-    } catch (error) {
-      console.log('예금DB저장실패')
-    }
-
-    try {
-      if (getDB2.value === true) {
-        await axios({
-          method: 'get',
-          url: 'http://127.0.0.1:8000/saving/api'
-        })
-        console.log('적금DB저장완료')
-        getDB2.value = false
-      }
-    } catch (error) {
-      console.log('적금DB저장실패')
-    }
-  }
-
-  // 초기 데이터 로드
-  initializeData()
-
-  const dbSaving = function () {
-    if (getDB2.value === true) {
-      axios({
-        method: 'get',
-        url: 'http://127.0.0.1:8000/saving/api'
-      }).then((response) => {
-        console.log('적금DB저장완료')
-        getDB2.value = false
-      }).catch((error) => {
-        console.log('적금DB저장실패')
-      })
-    }
-  }
 
   const API_URL = 'http://127.0.0.1:8000'
   const finances = ref([])
@@ -179,6 +132,6 @@ export const useFinanceStore = defineStore('finance', () => {
   return {
     API_URL, getDeposits, getFreeSaving, getFixedSaving, finances, finances2, finances3,
     changeFinances, changeFinances2, changeFinances3, token, isLogin, logIn, signUp,
-    userInfo, userId, write, getDB2, dbSaving
+    userInfo, userId, write
   }
 }, { persist: true })

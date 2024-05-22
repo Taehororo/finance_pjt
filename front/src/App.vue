@@ -104,6 +104,10 @@ const goArticles = function () {
         </div>
       </div>
     </nav>
+        <div>
+              <a href="http://127.0.0.1:8000/deposit/api">예금저장</a> |
+              <a href="http://127.0.0.1:8000/saving/api">적금저장</a>
+        </div>
   </div>
 
   <!-- 화면 깜빡임 효과를 적용할 RouterView -->
