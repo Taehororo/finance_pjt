@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-4">
-    <h1 class="text-center">게시판</h1>
+    <h1 class="text-center fw-bold">게시판</h1>
     <div class="text-end mb-3">
       <button type="button" class="btn btn-outline-dark" @click="goWrite" v-if="store.write">글 쓰기</button>
     </div>

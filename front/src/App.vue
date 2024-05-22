@@ -43,7 +43,7 @@ const goProfile = function () {
 // 로그인 상태를 확인하고 로그인되어 있지 않다면 경고 창을 표시
 const goArticles = function () {
   if (store.token) {
-    router.push({ name: 'articles' })
+    router.push({ name: 'articleall' })
   } else {
     if (confirm('로그인 사용자만 이용할 수 있습니다. 로그인하겠습니까?')) {
       goLogin()
@@ -92,22 +92,23 @@ const goArticles = function () {
           <span class="navbar-text">
             <!-- 로그인 되어있을때 -->
             <div v-if="store.token">
-              <button type="button" class="btn btn-outline-dark" @click="goProfile">나의 정보</button>
-              <button type="button" class="btn btn-outline-dark ms-2" @click="goLogout">로그아웃</button>
+              <button type="button" class="btn btn-outline-success" @click="goProfile">나의 정보</button>
+              <button type="button" class="btn btn-outline-danger ms-2" @click="goLogout">로그아웃</button>
             </div>
             <!-- 로그인 안되어있을때 -->
             <div v-else>
-              <button type="button" class="btn btn-outline-dark" @click="goLogin">로그인</button>
+              <button type="button" class="btn btn-outline-primary" @click="goLogin">로그인</button>
               <button type="button" class="btn btn-outline-dark ms-2" @click="goSignup">회원가입</button>
             </div>
           </span>
         </div>
       </div>
     </nav>
-        <div>
+        <!-- 예금저장, 적금저장이 자동으로 안되어서 추가했던 코드 -->
+        <!-- <div>
               <a href="http://127.0.0.1:8000/deposit/api">예금저장</a> |
               <a href="http://127.0.0.1:8000/saving/api">적금저장</a>
-        </div>
+        </div> -->
   </div>
 
   <!-- 화면 깜빡임 효과를 적용할 RouterView -->

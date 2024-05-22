@@ -53,7 +53,6 @@ const kind = ref('deposit/like/')
 
 const showPopup = (item) => {
   finance.value = item
-  console.log(finance.value)
 }
 
 // 표에 알맞는 데이터를 넣기 위한 함수

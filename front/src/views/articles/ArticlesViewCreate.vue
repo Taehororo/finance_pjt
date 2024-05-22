@@ -10,8 +10,8 @@
         <label for="content" class="form-label">내용</label>
         <textarea id="content" class="form-control" rows="5" v-model="content"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">저장</button>
-      <button type="button" class="btn btn-secondary ml-2" @click="cancleWrite">작성 취소</button>
+      <button type="submit" class="btn btn-outline-primary">저장</button>
+      <button type="button" class="btn btn-outline-secondary ml-2" @click="cancleWrite">작성 취소</button>
     </form>
   </div>
 </template>

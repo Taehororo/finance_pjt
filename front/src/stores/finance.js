@@ -23,7 +23,10 @@ export const useFinanceStore = defineStore('finance', () => {
   })
 
   const signUp = function (payload) {
-    const { name, username, email, password1, password2, postcode, roadAddress, jibunAddress, detailAddress } = payload
+    const { name, username, email,
+      password1, password2, postcode,
+      roadAddress, jibunAddress, detailAddress
+    } = payload
 
     axios({
       method: 'post',

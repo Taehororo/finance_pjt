@@ -110,15 +110,10 @@ const sendDataToBackend = async () => {
         producttype: producttype.value
       }
     })
-    console.log(response)
     responseData.value = response.data.message
     recommendArr.value = response.data.product
     // 입력창 초기화
     userQuestion.value = ''
-    console.log(recommendArrId.value)
-    for (let recommend of recommendArr.value) {
-      console.log(recommend)
-    }
   } catch (error) {
     console.error('Error sending data to backend:', error)
   }

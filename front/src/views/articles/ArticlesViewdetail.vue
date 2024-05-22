@@ -1,20 +1,20 @@
 <template>
 	<div class="container mt-5">
-		<h3 class="fw-bold">상세페이지</h3>
+		<h4 class="fw-bold">상세페이지</h4>
 		<div class="card mb-3">
 			<div class="card-body">
-				<h5 class="card-title">{{ article.title }}</h5>
-				<h6 class="card-subtitle mb-2 text-muted">작성자: {{ article.author }}</h6>
-				<p class="card-text">{{ article.content }}</p>
-				<div class="btn-group" v-if="article.author === store.userInfo.username">
-					<button type="button" class="btn btn-primary" @click="goUpdate">수정하기</button>
-					<button type="button" class="btn btn-danger" @click="deleteArticle">삭제하기</button>
-					<button type="button" class="btn btn-secondary" @click="goBack">뒤로가기</button>
+				<h4 class="card-title fw-bold">{{ article.title }}</h4>
+				<h6 class="card-subtitle mb-2 text-muted text-end">작성자: {{ article.author }}</h6>
+				<hr>
+				<h4 class="card-text">{{ article.content }}</h4>
+				<div class="d-flex justify-content-end" v-if="article.author === store.userInfo.username">
+					<button type="button" class="btn btn-outline-primary me-2" @click="goUpdate">수정하기</button>
+					<button type="button" class="btn btn-outline-danger me-2" @click="deleteArticle">삭제하기</button>
+					<button type="button" class="btn btn-outline-secondary" @click="goBack">뒤로가기</button>
 				</div>
-				<div v-else>
-					<button type="button" class="btn btn-secondary" @click="goBack">뒤로가기</button>
+				<div class="d-flex justify-content-end" v-else>
+					<button type="button" class="btn btn-outline-secondary" @click="goBack">뒤로가기</button>
 				</div>
-
 			</div>
 		</div>
 		<CommentsAll :articleId="articleId" />
@@ -72,4 +72,14 @@ const deleteArticle = () => {
 .container {
 	max-width: 800px;
 }
+.card-subtitle {
+	display: flex;
+	justify-content: flex-end;
+}
+.btn-group {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+}
+
 </style>

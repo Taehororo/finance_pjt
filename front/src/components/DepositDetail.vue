@@ -21,9 +21,9 @@
       <!-- 로그인한 사용자만 이버튼이 보이도록 -->
       <div v-if="store.token">
         <!-- 이미 찜목록에 추가한 사용자 -->
-        <button type="button" class="btn btn-info" @click="checkLiked" v-if="liked===true">찜취소</button>
+        <button type="button" class="btn btn-outline-danger" @click="checkLiked" v-if="liked===true">찜취소</button>
         <!-- 찜목록에 들어가있지 않은 사용자 -->
-        <button type="button" class="btn btn-info" @click="checkLiked" v-if="liked===false">찜하기</button>
+        <button type="button" class="btn btn-outline-success" @click="checkLiked" v-if="liked===false">찜하기</button>
       </div>
       
     </div>
@@ -85,13 +85,11 @@ const checkLiked = function () {
       base_product_id : props.finance['base_product_id']
     }
    }).then((respoonse) => {
-    console.log(respoonse.data['message'])
     if (respoonse.data.liked === false) {
       liked.value = false
     } else {
       liked.value = true
     }
-
   }).catch((error) => {
     console.log(error)
   })
@@ -103,13 +101,11 @@ const checkLiked = function () {
       Authorization: `Token ${store.token}`
     }
   }).then((response) => {
-    console.log(response.data)
     store.userInfo = response.data
   }).catch((error) => {
     console.log(error)
   })
   if (route.name === 'Profile') {
-    console.log(route.params.userid)
     router.go(0)
     // router.replace({ name: 'Profile',params:{userid: route.params.userid }})
   }

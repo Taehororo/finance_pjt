@@ -86,7 +86,6 @@ onMounted(() => {
     method: 'get',
     url: `${store.API_URL}/exchange/api/`
   }).then((respoonse) => {
-    console.log(respoonse.data)
   }).catch((error) => {
     console.log(error)
   })

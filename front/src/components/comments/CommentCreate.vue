@@ -5,7 +5,7 @@
         <label for="content" class="form-label">내용</label>
         <textarea id="content" class="form-control" rows="3" v-model="content"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">저장</button>
+      <button type="submit" class="btn btn-outline-primary">저장</button>
     </form>
   </div>
 </template>

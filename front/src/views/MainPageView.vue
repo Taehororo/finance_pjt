@@ -13,19 +13,18 @@
       </div>
     </div>
 
-    <!-- Second Section -->
-    <div class="row h-100 bg-gradient-secondary mt-3">
-      <div class="col-md-5 d-flex align-items-center justify-content-center order-md-last">
-        <img src="@/assets/images/airplane1_red.png" class="img-fluid" alt="Sample Image">
-      </div>
-      <div class="col-md-7 d-flex align-items-center justify-content-center">
-        <div class="text-container">
-          <h2 class="text-white">환율을 확인해볼까요?</h2>
-          <button type="button" class="btn btn-primary btn-lg mt-3" @click="goExchange">환율 보러가기</button>
-        </div>
+  <!-- Second Section -->
+  <div class="row h-100 bg-gradient-secondary mt-3">
+    <div class="col-md-5 d-flex align-items-center justify-content-center">
+      <img src="@/assets/images/airplane1_red.png" class="img-fluid" alt="Sample Image">
+    </div>
+    <div class="col-md-7 d-flex align-items-center justify-content-center order-md-last">
+      <div class="text-container">
+        <h2 class="text-white">환율을 확인해볼까요?</h2>
+        <button type="button" class="btn btn-primary btn-lg mt-3" @click="goExchange">환율 보러가기</button>
       </div>
     </div>
-
+  </div>
     <!-- Third Section -->
     <div class="row h-100 bg-gradient-tertiary mt-3">
       <div class="col-md-7 d-flex align-items-center justify-content-center">
