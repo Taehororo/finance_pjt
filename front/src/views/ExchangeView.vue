@@ -1,6 +1,6 @@
 <template>
   <div class="bg-info-subtle d-flex align-items-center justify-content-center" style="height: 100px;">
-    <h2 class="fw-bold">환율 변환기</h2>
+    <h2 class="fw-bold">환율변환</h2>
   </div>
 
   <div class="container mt-5 d-flex flex-column align-items-center">

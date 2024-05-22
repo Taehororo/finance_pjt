@@ -76,7 +76,7 @@ const goArticles = function () {
               <RouterLink :to="{ name: 'CompareView' }" class="nav-link active">예/적금 금리비교</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink :to="{ name: 'ExchangeView' }" class="nav-link active">환율비교</RouterLink>
+              <RouterLink :to="{ name: 'ExchangeView' }" class="nav-link active">환율변환</RouterLink>
             </li>
             <li class="nav-item">
               <RouterLink :to="{ name: 'NearBankView' }" class="nav-link active">근처은행</RouterLink>
