@@ -10,9 +10,13 @@
       <div class="chat-message">
         <div class="chat-bubble">
           <p>ChatGPT: {{ responseData }}</p>
-        
+          <div v-for="recommend in recommendArr" :key="recommend.id">
+            <button type="button" class="btn btn-custom" @click="showPopup(recommend, kindToUrl())">{{
+              recommend.fin_prdt_nm }}</button>
+            <h5> </h5>
+          </div>
         </div>
-        
+        <DepostiDetail v-if="finance" :finance="finance" :kind="sendUrl" @close="closePopup" />
       </div>
     </div>
 
@@ -34,7 +38,7 @@
     <div class="question-container">
       <label for="questionInput">궁금한 것:</label>
       <input type="text" id="questionInput" v-model="userQuestion" @keyup.enter="submitQuestion">
-      <button type="button" @click="submitQuestion">제출</button>
+      <button type="button" class="btn btn-custom" @click="submitQuestion">제출</button>
     </div>
   </div>
 </template>
@@ -63,6 +67,28 @@ const submitQuestion = () => {
   sendDataToBackend()
 }
 
+const finance = ref(null)
+const sendUrl = ref('')
+
+// 추천해준 예금, 정기적금, 자유적금 종류에 따라 마땅한 url 값을 알려주기
+const kindToUrl = function () {
+  if (productType.value === '예금') {
+    return 'deposit/like/'
+  } else if (productType.value === '정기적금') {
+    return 'saving/like_fixed/'
+  } else {
+    return 'saving/like_free/'
+  }
+}
+
+const showPopup = function (product, url) {
+  finance.value = product
+  sendUrl.value = url
+}
+
+const closePopup = function () {
+  finance.value = null
+}
 
 // 백엔드로 데이터 전송
 const sendDataToBackend = async () => {
@@ -75,6 +101,7 @@ const sendDataToBackend = async () => {
     } else {
       producttype.value = 'freesaving'
     }
+    responseData.value = '데이타 생성중~~^^'
     const response = await axios({
       method: 'post',
       url: `${store.API_URL}/recommender/chatbot/`,
@@ -83,7 +110,7 @@ const sendDataToBackend = async () => {
         producttype: producttype.value
       }
     })
-
+    console.log(response)
     responseData.value = response.data.message
     recommendArr.value = response.data.product
     // 입력창 초기화
@@ -97,7 +124,6 @@ const sendDataToBackend = async () => {
   }
 }
 
-
 // 상품 유형 선택 함수
 const selectProductType = (type) => {
   productType.value = type
@@ -107,7 +133,7 @@ const selectProductType = (type) => {
 <style scoped>
 /* ChatGPT 스타일 */
 .chat-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -117,7 +143,7 @@ const selectProductType = (type) => {
   padding: 20px;
   margin-bottom: 20px;
   overflow-y: auto;
-  max-height: 300px;
+  height: 500px;
 }
 
 .chat-message {
@@ -129,7 +155,7 @@ const selectProductType = (type) => {
   border-radius: 15px;
   padding: 10px 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 70%;
+  max-width: 90%;
 }
 
 .radio-container {
@@ -173,6 +199,7 @@ const selectProductType = (type) => {
 .question-container button {
   padding: 8px 15px;
   background-color: #4CAF50;
+  /* Custom green */
   color: white;
   border: none;
   border-radius: 4px;
@@ -181,5 +208,21 @@ const selectProductType = (type) => {
 
 .question-container button:hover {
   background-color: #45a049;
+  /* Darker green */
 }
-</style>
+
+/* 커스텀 버튼 색상 */
+.btn-custom {
+  background-color: #4CAF50;
+  /* Custom green */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 15px;
+  margin-top: 5px;
+}
+
+.btn-custom:hover {
+  background-color: #45a049;
+  /* Darker green */
+}</style>
