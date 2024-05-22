@@ -119,9 +119,9 @@ store.getDeposits()
 store.getFixedSaving()
 store.getFreeSaving()
 
-onMounted(() => {
-  store.dbSaving()
-})
+// onMounted(() => {
+//   store.dbSaving()
+// })
 
 // 예치기간을 위한 변수
 const selectedText = ref('12개월')

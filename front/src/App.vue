@@ -1,7 +1,7 @@
 <script setup>
 import { RouterLink, RouterView, useRouter, useRoute } from 'vue-router'
 import { useFinanceStore } from './stores/finance'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 // 상태 관리와 라우터 관련 설정
 const store = useFinanceStore()
@@ -50,6 +50,11 @@ const goArticles = function () {
     }
   }
 }
+
+// 서버 실행시 db 저장을 위한 함수 
+onMounted(() => {
+  store.dbSaving()
+})
 </script>
 
 <template>
