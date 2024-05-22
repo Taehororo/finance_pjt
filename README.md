@@ -25,7 +25,7 @@ $ npm run dev
 ```
 
 ### 데이터베이스 초기설정 (필수사항)
-### 1. 저장되어있는 JSON 파일 데이터 로드 (2024-05-22 기준)
+### 선택 1. 저장되어있는 JSON 파일 데이터 로드 (2024-05-22 기준)
 ```
 finance_pjt/back
 
@@ -34,7 +34,7 @@ $ python manage.py migrate
 $ python manage.py loaddata fixtures/deposit_data.json
 $ python manage.py loaddata fixtures/saving_data.json  
 ```
-### 2. 실시간 예적금 API 요청하여 데이터 로드
+### 선택 2. 실시간 예적금 API 요청하여 데이터 로드
 ```
 finance_pjt/back
 
