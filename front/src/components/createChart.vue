@@ -1,11 +1,11 @@
 <template>
-  <div class="chart-container">
-    <Line :data="data" :options="options" />
+<div class="chart-container">
+    <Line :data="chartData" :options="options"/>
   </div>
 </template>
 
-<script setup lang="ts">
-import { reactive, defineProps } from 'vue'
+<script setup>
+import { ref, defineProps, watch } from 'vue'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,12 +17,18 @@ import {
   Legend
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
+
+
+
 const props = defineProps({
-  
+  kind: String,
+  dates: Array,
+  rates: Array,
 })
 
 // Chart.js에 사용할 모듈들을 등록합니다.
 ChartJS.register(
+
   CategoryScale,
   LinearScale,
   PointElement,
@@ -32,22 +38,34 @@ ChartJS.register(
   Legend
 );
 
-const data = reactive({
-  labels: ['1','2','3','4','5','6','7'],
+const chartData = ref({
+  labels: props.dates,
   datasets: [
     {
-      label: '입력 통화 환율 추이',
+      label: `${props.kind} 통화 환율 추이`,
       backgroundColor: '#f87979',
       borderColor: '#f87979',
-      data: [40, 20, 12, 39, 10, 40, 39]
+      data: props.rates
     }
   ]
 });
 
-const options = reactive({
+const options = {
   responsive: true,
   maintainAspectRatio: false
-});
+}
+
+// props의 변화를 감지하여 데이터 업데이트
+watch(
+  () => [props.dates, props.rates],
+  ([newDates, newRates]) => {
+    chartData.value.labels = newDates;
+    chartData.value.datasets[0].data = newRates;
+    console.log(props.rates)
+
+  }
+)
+
 </script>
 
 <style scoped>
@@ -55,8 +73,6 @@ const options = reactive({
   position: relative;
   margin: auto;
   height: 300px;
-  /* 변경된 높이 */
   width: 400px;
-  /* 변경된 너비 */
 }
 </style>

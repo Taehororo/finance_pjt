@@ -119,7 +119,9 @@ const goArticles = function () {
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Jua&display=swap');
 
 body,
-html {
+html,
+div
+p {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-weight: 400;
   font-style: normal;

@@ -1,34 +1,50 @@
 <template>
-  <div class="bg-info-subtle d-flex align-items-center justify-content-center container" style="height: 100px;">
-    <h2 class="fw-bold">환율변환</h2>
+  <div>
+    <div class="bg-info-subtle d-flex align-items-center justify-content-center container" style="height: 100px;">
+      <h2 class="fw-bold">환율변환</h2>
+    </div>
+    <!-- 입력 통화에 대한 그래프 -->
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col">
+          <createChart :dates="inCountry['dates']" :rates="inCountry['rates']" :kind="'입력'" :key="inCountry['dates']" />
+        </div>
+        <!-- 가운데 영역은 그대로 두세요 -->
+        <div class="col">
+          <!-- 입력 및 출력 통화 선택 등의 요소 -->
+          <div class="container mt-5 d-flex flex-column align-items-center">
+            <div class="mb-3">
+              <label for="fromCurrency" class="form-label text-info fw-bold">입력 통화를 선택하세요:</label>
+              <select id="fromCurrency" class="form-select fs-5" style="width: 300px;" v-model="fromCurrency">
+                <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="amount" class="form-label text-info fw-bold">숫자를 입력하세요:</label>
+              <input type="number" id="amount" class="form-control fs-5 fw-bold" style="width: 300px;" v-model="amount">
+            </div>
+            <div class="mb-3">
+              <label for="toCurrency" class="form-label text-info fw-bold">변환할 통화를 선택하세요:</label>
+              <select id="toCurrency" class="form-select fs-5" style="width: 300px;" v-model="toCurrency">
+                <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
+              </select>
+            </div>
+            <div>
+              <span class="m-0 fw-light text-info fw-bold">바뀐 돈</span>
+              <span class="m-0 fw-light fw-bold" v-if="date"> | </span>
+              <span class="m-0 fw-light text-info fw-bold" v-if="date">기준: {{ date }}</span>
+              <h2 class="fs-1 fw-bold mt-0">{{ changeAmount }} {{ toCurrency }}</h2>
+            </div>
+          </div>
+        </div>
+        <!-- 출력 통화에 대한 그래프 -->
+        <div class="col">
+          <createChart :dates="outCountry['dates']" :rates="outCountry['rates']" :kind="'출력'"
+            :key="outCountry['dates']" />
+        </div>
+      </div>
+    </div>
   </div>
-  <createChart />
-  <div class="container mt-5 d-flex flex-column align-items-center">
-    <div class="mb-3">
-      <label for="fromCurrency" class="form-label text-info fw-bold">입력 통화를 선택하세요:</label>
-      <select id="fromCurrency" class="form-select fs-5" style="width: 300px;" v-model="fromCurrency">
-        <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label for="amount" class="form-label text-info fw-bold">숫자를 입력하세요:</label>
-      <input type="number" id="amount" class="form-control fs-5 fw-bold" style="width: 300px;" v-model="amount">
-    </div>
-    <div class="mb-3">
-      <label for="toCurrency" class="form-label text-info fw-bold">변환할 통화를 선택하세요:</label>
-      <select id="toCurrency" class="form-select fs-5" style="width: 300px;" v-model="toCurrency">
-        <option v-for="currency in currencies" :key="currency" :value="currency">{{ currency }}</option>
-      </select>
-    </div>
-    <div>
-      <span class="m-0 fw-light text-info fw-bold">바뀐 돈</span>
-      <span class="m-0 fw-light fw-bold" v-if="date"> | </span>
-      <span class="m-0 fw-light text-info fw-bold" v-if="date">기준: {{ date }}</span>
-      
-      <h2 class="fs-1 fw-bold mt-0">{{ changeAmount }} {{ toCurrency }}</h2>
-    </div>
-  </div>
-  
 </template>
 
 <script setup>
@@ -58,6 +74,11 @@ const changeAmount = ref(0)
 // 환율적용날짜
 const date = ref(null)
 
+// 그래프를 입력통화나라와 출력통화나라별 정보를 저장할거임
+const inCountry = ref({})
+const outCountry = ref({})
+
+
 // django에 입력 통화와 변경할 통화 나라 보내주기
 import axios from 'axios'
 const sendCountry = function () {
@@ -76,6 +97,9 @@ const sendCountry = function () {
   }).then((response) => {
     changeAmount.value = response.data.result
     date.value = response.data.exchange_date
+    // 그래프를 그리기위해 각나라별 일주일간 환율정보 저장
+    inCountry.value = response.data.input_country
+    outCountry.value = response.data.output_country
   }).catch((error) => {
     console.log(error)
   })
@@ -90,7 +114,10 @@ onMounted(() => {
   axios({
     method: 'get',
     url: `${store.API_URL}/exchange/api/`
-  }).then((respoonse) => {
+  }).then((response) => {
+    console.log(response)
+    inCountry.value = response.data.input_country
+    outCountry.value = response.data.output_country
   }).catch((error) => {
     console.log(error)
   })
