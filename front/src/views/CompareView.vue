@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-info-subtle d-flex align-items-center justify-content-center" style="height: 100px;">
+    <div class="bg-info-subtle d-flex align-items-center justify-content-center container" style="height: 100px;">
       <h2 class="fw-bold">예/적금 금리비교</h2>
     </div>
 

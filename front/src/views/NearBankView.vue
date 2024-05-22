@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-info-subtle d-flex align-items-center justify-content-center" style="height: 100px;">
+  <div class="bg-info-subtle d-flex align-items-center justify-content-center container" style="height: 100px;">
     <h2 class="fw-bold">근처은행</h2>
   </div>
   <div id="app" class="container">
@@ -8,12 +8,7 @@
       <button class="btn btn-primary" @click="searchNearbyBanks">검색</button>
     </div>
     <KaKaoMap :initial-address="initialAddress" :user-address="sendaddress"/>
-    <p> _</p>
-    <p> _</p>
-    <p> _</p>
-    <p> _</p>
-    <p>_ </p>
-    <p>_ </p>
+
   </div>
 </template>
 

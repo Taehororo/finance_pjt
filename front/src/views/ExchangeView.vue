@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-info-subtle d-flex align-items-center justify-content-center" style="height: 100px;">
+  <div class="bg-info-subtle d-flex align-items-center justify-content-center container" style="height: 100px;">
     <h2 class="fw-bold">환율변환</h2>
   </div>
 
