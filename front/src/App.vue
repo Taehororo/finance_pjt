@@ -51,10 +51,8 @@ const goArticles = function () {
   }
 }
 
-// 서버 실행시 db 저장을 위한 함수 
-onMounted(() => {
-  store.dbSaving()
-})
+
+
 </script>
 
 <template>

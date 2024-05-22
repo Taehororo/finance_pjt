@@ -8,27 +8,47 @@ const getDB = ref(true)
 
 export const useFinanceStore = defineStore('finance', () => {
 
+
+  const getDB2 = ref(true)
   // 서버 처음 시작될때 예적금 데이터 가져오기 위하여 설정
-  if (getDB) {
+  if (getDB.value === true) {
     axios({
       method: 'get',
       url: 'http://127.0.0.1:8000/deposit/api'
+    }).then((response) => {
+      console.log('예금DB저장완료')
+      getDB.value = false
+    }).catch((error) => {
+      console.log('예금DB저장실패')
     })
-    getDB.value = false
+    
   } 
+  if (getDB2.value === true) {
+    axios({
+      method: 'get',
+      url: 'http://127.0.0.1:8000/saving/api'
+    }).then((response) => {
+      console.log('적금DB저장완료')
+      getDB2.value = false
+    }).catch((error) => {
+      console.log('적금DB저장실패')
+    })
+  }
 
-
-
-  const getDB2 = ref(true)
+  
 
 
   const dbSaving = function () {
-    if (getDB2.value) {
+    if (getDB2.value === true) {
       axios({
         method: 'get',
         url: 'http://127.0.0.1:8000/saving/api'
+      }).then((response) => {
+        console.log('적금DB저장완료')
+        getDB2.value = false
+      }).catch((error) => {
+        console.log('적금DB저장실패')
       })
-    getDB2.value = false
     }
    
   }

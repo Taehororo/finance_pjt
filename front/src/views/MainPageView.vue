@@ -42,7 +42,10 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useFinanceStore } from '@/stores/finance'
+const store = useFinanceStore()
 const router = useRouter()
 
 const goCompare = () => {
@@ -56,6 +59,10 @@ const goExchange = () => {
 const goSuggestion = () => {
   router.push({ name: 'SuggestionView' })
 }
+
+// 서버 실행시 db 저장을 위한 함수 
+store.dbSaving()
+
 </script>
 
 <style scoped>
