@@ -332,5 +332,5 @@
 > **/recommender/chatbot/**
 > | **Body** &nbsp; <sub>form-data</sub>  |  |
 > | --- | --- |
-> | **message** | 1 |
+> | **message** | 하나은행 상품을 추천해주세요 |
 > | **productype** | freesaving |
