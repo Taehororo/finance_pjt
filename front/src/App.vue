@@ -120,7 +120,7 @@ const goArticles = function () {
 
 body,
 html,
-div
+div,
 p {
   font-family: "IBM Plex Sans KR", sans-serif;
   font-weight: 400;
