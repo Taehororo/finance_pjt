@@ -7,20 +7,8 @@
 ![](https://img.shields.io/static/v1?label=&message=EMIT&color=brightgreen)
 ![](https://img.shields.io/static/v1?label=&message=ON&color=blue) 
  
-## API Description
- 
-> ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
-> 예금 api 불러와서 DB에 저장 <br>
-> http://127.0.0.1:8000/deposit/api
- 
- > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
-> 적금 api 불러와서 DB에 저장 <br>
-> http://127.0.0.1:8000/saving/api
-
-<br>
-<hr>
-
 ### 전체, 특정 상품 조회
+<hr>
 
  > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > (DB에 저장된) 전체 예금상품 목록조회 <br>
@@ -32,8 +20,8 @@
 > http://127.0.0.1:8000/deposit/products/ <br>
 > | **Body** &nbsp; <sub>form-data</sub>  |  |
 > | --- | --- |
-> | **content** | 12개월 |
-> | **bankname** | 전체은행 |
+> | **content** | 18개월 |
+> | **bankname** | 신한은행 |
 
  > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > (DB에 저장된) 전체 정기적금상품 목록조회 <br>
@@ -45,8 +33,8 @@
 > http://127.0.0.1:8000/saving/fixed/products/ <br>
 > | **Body** &nbsp; <sub>form-data</sub>  |  |
 > | --- | --- |
-> | **content** | 12개월 |
-> | **bankname** | 전체은행 |
+> | **content** | 6개월 |
+> | **bankname** | 하나은행 |
 
  > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > (DB에 저장된) 전체 자유적금상품 목록조회 <br>
@@ -61,9 +49,9 @@
 > | **bankname** | 전체은행 |
 
 <br>
-<hr>
 
 ### 환율계산
+<hr>
 
  > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 환율계산 요청 불러오기 <br>
@@ -80,9 +68,9 @@
 > | **money** | 10 |
 
 <br>
-<hr>
 
 ### 회원가입, 로그인, 프로필조회
+<hr>
 
  > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
 > 회원가입 요청<br>
@@ -121,9 +109,10 @@
 > | **Authorization** | Token 토큰 |  
 
 <br>
-<hr>
 
 ### 찜하기 기능
+<hr>
+
 > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
 > 예금상품 찜하기 <br>
 > http://127.0.0.1:8000/deposit/like/<<int:product_id>>/
@@ -165,8 +154,12 @@
 >    "message": "해당 자유적금 상품이 찜한 목록에 추가되었습니다.",
 >    "liked": true
 >  }
->
+
+<br>
+
 ### 각 상품들 찜한 여부 조회
+<hr>
+
 > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 예금상품 찜여부 조회 <br>
 > http://127.0.0.1:8000/deposit/like/check/<<int:product_id>>/
@@ -207,9 +200,10 @@
 > }
 >
 <br>
-<hr>
 
 ### 게시판 CRUD
+<hr>
+
 > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 게시글 목록 조회<br>
 > **/articles/articles/**
@@ -228,7 +222,6 @@
 > | **content** | 게시글 내용입니다 |
 
 <br>
-<hr>
 
 > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 게시글 상세 조회<br>
@@ -266,12 +259,14 @@
 > | --- | --- |
 > | **Authorization** | Token 토큰값 |  
 
+<br>
 
 ### 댓글 CRUD
+<hr>
+
 > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 댓글 목록 조회<br>
 > */articles/comments/*
-
 
 > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
 > 댓글 생성 <br>
@@ -286,12 +281,10 @@
 > | **content** | 새로운 댓글입니다 |
 
 <br>
-<hr>
 
 > ![](https://img.shields.io/static/v1?label=&message=GET&color=darkgreen) <br>
 > 댓글 상세 조회<br>
 > */articles/comments/{id}/*
-
 
 
 >![](https://img.shields.io/static/v1?label=&message=PUT&color=blue)<br>
@@ -326,7 +319,11 @@
 > | **Authorization** | Token 토큰값 |  
 >
 
+<br>
+
 ### 챗봇에 질문하기
+<hr>
+
 > ![](https://img.shields.io/static/v1?label=&message=POST&color=yellow) <br>
 > gpt에 질문 <br>
 > **/recommender/chatbot/**
