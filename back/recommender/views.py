@@ -171,10 +171,10 @@ def recommend_product(user_message, product_type):
 
     while True:
         data = {
-            'model': 'gpt-3.5-turbo',
-            'messages': messages,
-            'max_tokens': 200,
-            'stop': None
+            'model': 'gpt-3.5-turbo',   # 사용하려는 모델 이름
+            'messages': messages,       # 사용자와 모델 간의 대화 내용을 담은 리스트
+            'max_tokens': 200,          # 모델이 생성할 응답의 최대 토큰 수
+            'stop': None                # 모델이 응답 생성을 멈추기 위한 종료 시퀀스
         }
         
         response = requests.post(url, headers=headers, json=data)
@@ -186,6 +186,7 @@ def recommend_product(user_message, product_type):
         
         try:
             gpt_response = response.json()
+            # choices 리스트의 첫 번째 요소에서 message 객체의 content 필드를 가져옴
             gpt_message = gpt_response['choices'][0]['message']['content']
         except (KeyError, IndexError, TypeError) as e:
             print("Error: Unexpected API response format")
