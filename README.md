@@ -4,7 +4,7 @@
 - 팀장: 전태호 (Front-End)
 - 팀원: 오현진 (Back-End) 
 
-## 설계 내용
+## overview
 ### 메인 기능 
 1. 예금 & 적금 금리비교 사이트
 2. 환율변환
@@ -27,6 +27,41 @@
 - 한국수출입은행 환율정보 API (환율변환에 사용)
 - 금융감독원 API (예/적금 금리비교에 사용)
 - chatGPT API (금융상품추천에 사용)
+
+## 설계 구조 
+
+### Front
+```
+📦views
+ ┣ 📂articles ( 게시글 관련 )
+ ┃ ┣ 📜ArticlesView.vue
+ ┃ ┣ 📜ArticlesViewAll.vue
+ ┃ ┣ 📜ArticlesViewCreate.vue
+ ┃ ┣ 📜ArticlesViewdetail.vue
+ ┃ ┗ 📜ArticlesViewUpdate.vue
+ ┣ 📂users  ( 사용자 관련 )
+ ┃ ┣ 📜LoginView.vue
+ ┃ ┣ 📜ProfileView.vue
+ ┃ ┗ 📜SignUpView.vue
+ ┣ 📜CompareView.vue  (예/적금 비교 관련 )
+ ┣ 📜CompareViewDeposit.vue ( 예금 비교 )
+ ┣ 📜CompareViewFixedSaving.vue ( 정기적금 비교 )
+ ┣ 📜CompareViewFreeSaving.vue  ( 자유적금 비교 )
+ ┣ 📜ExchangeView.vue ( 환율변환 )
+ ┣ 📜MainPageView.vue 
+ ┣ 📜NearBankView.vue ( 근처은행 )
+ ┗ 📜SuggestionView.vue ( chatGPT를 활용한 금융상품 추천)
+
+ 📦components
+ ┣ 📂comments ( 게시글의 댓글 관련 )
+ ┃ ┣ 📜CommentCreate.vue
+ ┃ ┗ 📜CommentsAll.vue
+ ┣ 📜createChart.vue  ( 환율변환의 차트 생성 )
+ ┣ 📜DepositDetail.vue  ( 금융상품의 상세정보페이지 )
+ ┗ 📜KaKaoMap.vue ( 근처은행 검색시 KaKaoMap API 사용 )
+ ```
+
+###  Back
 
 
 ## [데이터베이스 모델링(ERD)](https://github.com/Taehororo/finance_pjt/blob/master/E-R%20diagram.md)
@@ -107,11 +142,17 @@
    
 ## 서비스 대표 기능들
 ### 1. 예/적금 금리비교
+- 예금, 정지적금, 자유적금 3가지로 분류하였고, 금리가 높은 순으로 정렬하였다.
+- 은행의 종류와 예치기간 ( 1,3,6,12,24,36 ) 의 선택을 통해 선택된 기준에 따라서도 볼 수 있도록 설정하였다.
+- 해당하는 상품을 누르면 상품의 상세정보가 나옴
+- 찜하기 버튼을 통해 상품을 찜할 수 있고, 찜한 상품은 사용자의 프로필 페이지에 저장, 후에 찜취소로 취소가능
 
 ### 2. 환율변환
 - 사용자는 입력 통화와 출력 통화를 선택하여 환율 계산을 즉시 가능
+- 입력 통화, 출력 통화의 최근 7일간의 환율 변환 추이 그래프를 그려줌
 
 ### 3. 근처은행
+- KaKaoMap API를 통해 지역주소를 입력하면 그 근처의 최대 16개의 은행이 보임
 
 ### 4. 상품 추천
 - 사용자는 원하는 상품에 대해 자유롭게 질문할 수 있음
@@ -120,9 +161,24 @@
 - 사용자는 찜하기를 통해 해당 상품을 찜한 리스트에 저장 가능
 
 ### 5. 게시판
-
+- 로그인한 사용자만 게시판을 이용할 수 있도록 설정
+- 게시글을 작성한 본인만 게시글 수정,삭제가 가능
+- 각 게시글에 댓글을 달 수 있도록 설정
 
 
 ## 후기
+### 전태호
+chart.js, vue-chart.js 사용할때 어려웠다.
+분명 부모 component에서 자식 component로 props를 통해 데이터를 실시간으로 넘겨주었고, 실제로 데이터가 실제로 넘어가는 것을 확인했다. 하지만, 이 실시간 데이터를 통해 차트를 그리는 것이 실시간으로 이루어지지 않았다.
+방법을 찾다가. 결국 stackoverflow에서 방법을 찾아냈다.
+
+```html
+<createChart :dates="inCountry['dates']" :rates="inCountry['rates']" :kind="'입력'" :key="inCountry['dates']" />
+```
+보이는 것처럼 key값으로 실시간으로 부모에서 변하는 값을 자식쪽으로 넣어주었더니, 그래프가 실시간으로 그려지기 시작했다.
+
+pjt를 진행하며, 나와 같은 상황에서 비슷한 고민을 했던 다른 수많은 개발자들이 전에 남긴 질문들과 고민을 보면서, 그들을 통해 도움을 얻기도 하고, 나만의 해결책으로 해결해나가면서 점점 나에 대한 자신감을 얻을 수 있었다.
+
+### 오현진
 - 데이터 활용 어려움
 - 이상하게 잘 안됨
