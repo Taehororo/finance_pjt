@@ -115,7 +115,6 @@ onMounted(() => {
     method: 'get',
     url: `${store.API_URL}/exchange/api/`
   }).then((response) => {
-    console.log(response)
     inCountry.value = response.data.input_country
     outCountry.value = response.data.output_country
   }).catch((error) => {
