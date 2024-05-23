@@ -64,16 +64,16 @@
 ###  Back
 ```
 📦back
- ┣ 📂accounts
- ┣ 📂articles
- ┣ 📂back
- ┣ 📂deposit
- ┣ 📂exchange
- ┣ 📂fixtures
+ ┣ 📂accounts (User model)
+ ┣ 📂articles (게시글, 댓글)
+ ┣ 📂back (장고 프로젝트)
+ ┣ 📂deposit (예금)
+ ┣ 📂exchange (환율)
+ ┣ 📂fixtures (데이터 파일 폴더)
  ┃ ┣ 📜deposit_data.json
  ┃ ┗ 📜saving_data.json
- ┣ 📂recommender
- ┣ 📂saving
+ ┣ 📂recommender (추천 서비스)
+ ┣ 📂saving (정기적금, 자유적금)
  ┣ 📂venv
  ┣ 📜.env
  ┣ 📜.gitignore
@@ -81,9 +81,11 @@
  ┣ 📜manage.py
  ┗ 📜requirements.txt
 ```
-
+## 프로젝트 아키텍쳐
+![Local Image](./images/Architecture.png)
 
 ## [데이터베이스 모델링(ERD)](https://github.com/Taehororo/finance_pjt/blob/master/E-R%20diagram.md)
+![Local Image](./images/E-R%20diagram.png)
 
 
 ## ChatGPT API를 활용한 금융 상품 추천
@@ -224,8 +226,6 @@ chart.js, vue-chart.js 사용할때 어려웠다.
 pjt를 진행하며, 나와 같은 상황에서 비슷한 고민을 했던 다른 수많은 개발자들이 전에 남긴 질문들과 고민을 보면서, 그들을 통해 도움을 얻기도 하고, 나만의 해결책으로 해결해나가면서 점점 나에 대한 자신감을 얻을 수 있었다.
 
 ### 오현진
-- 데이터 활용 어려움
-- 이상하게 잘 안됨
 #### 느낀점
 API 엔드포인트로 데이터를 주고 받을 때, 변수명과 데이터 형식 등 사소한 부분도 신경써야 되는 것을 깨달았다. 
 초반에는 약간의 불협화음이 있었지만 협업을 위해서는 API 명세서 작성과 같이 공유하는 문서 작성이 필수적임을 느꼈다.
