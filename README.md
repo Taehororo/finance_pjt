@@ -62,6 +62,25 @@
  ```
 
 ###  Back
+```
+📦back
+ ┣ 📂accounts
+ ┣ 📂articles
+ ┣ 📂back
+ ┣ 📂deposit
+ ┣ 📂exchange
+ ┣ 📂fixtures
+ ┃ ┣ 📜deposit_data.json
+ ┃ ┗ 📜saving_data.json
+ ┣ 📂recommender
+ ┣ 📂saving
+ ┣ 📂venv
+ ┣ 📜.env
+ ┣ 📜.gitignore
+ ┣ 📜db.sqlite3
+ ┣ 📜manage.py
+ ┗ 📜requirements.txt
+```
 
 
 ## [데이터베이스 모델링(ERD)](https://github.com/Taehororo/finance_pjt/blob/master/E-R%20diagram.md)
