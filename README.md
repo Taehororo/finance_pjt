@@ -64,16 +64,16 @@
 ###  Back
 ```
 📦back
- ┣ 📂accounts
- ┣ 📂articles
- ┣ 📂back
- ┣ 📂deposit
- ┣ 📂exchange
- ┣ 📂fixtures
+ ┣ 📂accounts (User model)
+ ┣ 📂articles (게시글, 댓글)
+ ┣ 📂back (장고 프로젝트)
+ ┣ 📂deposit (예금)
+ ┣ 📂exchange (환율)
+ ┣ 📂fixtures (데이터 파일 폴더)
  ┃ ┣ 📜deposit_data.json
  ┃ ┗ 📜saving_data.json
- ┣ 📂recommender
- ┣ 📂saving
+ ┣ 📂recommender (추천 서비스)
+ ┣ 📂saving (정기적금, 자유적금)
  ┣ 📂venv
  ┣ 📜.env
  ┣ 📜.gitignore
@@ -81,9 +81,11 @@
  ┣ 📜manage.py
  ┗ 📜requirements.txt
 ```
-
+## 프로젝트 아키텍쳐
+![Local Image](./images/Architecture.png)
 
 ## [데이터베이스 모델링(ERD)](https://github.com/Taehororo/finance_pjt/blob/master/E-R%20diagram.md)
+![Local Image](./images/E-R%20diagram.png)
 
 
 ## ChatGPT API를 활용한 금융 상품 추천
