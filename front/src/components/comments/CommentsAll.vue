@@ -7,7 +7,7 @@
       <div v-for="comment in reversedComments" :key="comment.id" class="card mb-3">
         <div class="card-body">
           <h6 class="card-subtitle mb-2 text-info" v-if="comment.author === store.userInfo['username']">내 댓글</h6>
-          <h6 class="card-title">작성자: {{ comment.author }}</h6>
+          <h6 class="card-title" v-if="comment.author !== store.userInfo['username']">작성자: {{ comment.author }}</h6>
           <p class="card-text">{{ comment.content }}</p>
           <button type="button" class="btn btn-sm btn-outline-danger" v-if="comment.author === store.userInfo['username']"
             @click="deleteComment(comment.id)">삭제하기</button>
