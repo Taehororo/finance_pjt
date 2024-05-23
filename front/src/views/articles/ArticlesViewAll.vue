@@ -2,8 +2,9 @@
   <div class="container mt-4">
     <div v-for="article in reversedArticles" :key="article.id" class="card mb-4 shadow">
       <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-info" v-if="article.author=== store.userInfo.username">내 글</h6>
         <h5 class="card-title fw-bold">{{ article.title }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted text-end">작성자: {{ article.author }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted text-end">작성자: {{ article.author }}</h6>     
         <RouterLink :to="{ name: 'articledetail', params: { articleid: article.id } }"
           class="btn btn-outline-primary float-end">상세보기</RouterLink>
       </div>
